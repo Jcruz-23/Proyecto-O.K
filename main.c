@@ -4,9 +4,7 @@
 #include<time.h>
 
 int main(){
-    
-    printf("\nChau");
-    
-    getchar();getchar();
+
+
     return 0;
 }
