@@ -6,7 +6,7 @@
 int main(){
     
 
-    printf("\nHola");
+    printf("\nHola Tuti te quiero");
     getchar();getchar();
     return 0;
 }
