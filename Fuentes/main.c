@@ -5,7 +5,7 @@
 #include<time.h>
 
 int main(){
-
+    printf("TP Integrador de info\n");
 
     return 0;
 }
