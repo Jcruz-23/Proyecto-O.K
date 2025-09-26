@@ -1,0 +1,1 @@
+//definicion de los prototipos de las funciones
