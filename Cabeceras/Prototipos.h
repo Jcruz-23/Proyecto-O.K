@@ -4,43 +4,62 @@
 //********ACLARACION , SE DEBERA MANEJAR CON PILA ES DECIR MEMORIA DINAMICA , RESERVANDO Y LIBERANDO MEMORIA ************/
 
 // Estructura de datos que guarda la información
+
+// csv MATRICULA
+
 typedef struct
 {
-    int id;
-    char descripcion[50];
-    // se debe agregar los campos a analizar , por ahora un id por cada dato analizado y una descripcion pero son solo ejemplos
+    int anio;       // años de escolaridad.
+    int matriculas; // matrícula.
+    int repitentes; // cantidad de repitentes.
+} registroMatricula;
+
+typedef struct Nodo
+{
+    int id;             // año
+    char provincia[20]; // provincias
+    char tipo[10];      // publico / privado
+    registroMatricula reg;
+    struct Nodo *ant;
+    struct Nodo *sig;
 } Matricula;
+
+// csv TRAYECTORIA
 typedef struct
 {
-    int id;
-    char descripcion[50];
-    // se debe agregar los campos a analizar , por ahora un id por cada dato analizado y una descripcion pero son solo ejemplos
-} Trayectoria;
+    int anio;                // años de escolaridad.
+    int secundariaEgresados; // cantidad de egresos.
+    int sobreEdad;           // cantidad de alumnos con sobre edad.
+
+} registroTrayecto;
 
 // Nodo de la lista doblemente enlazada
-typedef struct nodo
+typedef struct Nodo
 {
-    Matricula infoM;   // cada nodo guarda un registro de tipo trayectoria
-    Trayectoria infoT; // cada nodo guarda un registro de tipo trayectoria
-    struct nodo *ant;  // referencia al nodo anterior
-    struct nodo *sig;  // referencia al nodo siguiente
-} Nodo;
+    int id;             // año
+    char provincia[20]; // provincia
+    char tipo[10];      // publico / privado
 
-// Prototipos de funciones
-void menu(Nodo **f, Trayectoria registroT, Matricula registroM); // esta funcion deberia mostrar el menu de opciones que serian en un principio ,
-// A ver todo los datos guardados en orden de mas viejo a mas nuevo en años
-// B ver la comparativa de estos datos(alumnos egresados , repitentes , demas )
-// C Buscar por año los datos que se deseen ver
-// S salir del menu
-void insertarNodo(Nodo **f, Trayectoria registroT, Matricula registroM);
-void mostrarLista(Nodo *f); // Se muestran los datos ordenados
+    registroTrayecto reg;
+    struct Nodo *ant;
+    struct Nodo *sig;
+} Registro;
 
-void leerArchivo(Nodo **f, void (*insertar)(Nodo **f, Trayectoria, Matricula)); // leer archivos, pasar como parametro la funcion de insertar nodo. Ejemplo de como usarla/llamarla en main "leerArchivo(&lista, insertarNodo);"
-// datos de archivos por año , por un lado => Base matrícula. Educación Común. Matrícula total y por sexo, Repetidores, Alumnos con Sobreedad y Secciones, por Establecimiento, Jurisdicción, Sector de Gestión, Ámbito e Información de Oferta.
-// por otro lado =>Base Trayectoria. Educación Común. Alumnos Promovidos, No Promovidos y Salidos con y sin pase por Establecimiento, Jurisdicción, Sector de Gestión, Ámbito, Información de Oferta y Sexo.
+//--------->Objetivo de funciones<--------
 
-void comparacionDatos(Nodo *f); // analizar y mostrar la comparativa de estos datos de mayor a menor en cantidad, por ej. año que tuvo la mayor cantidad de egresados, y su cantidad
-// buscador de datos en especifico
-void menuBuscar(Nodo *f); // Despues nos ponemos de acuerdo en que opciones de datos buscar, por ej. buscar cantidad de egreso de mujeres por año
+//Funcion menu de opciones
+
+//******Para ambos nodos*******
+//--------->Mostrar nodo(debe mostrar la lista)
+//--------->ver todas las provincias
+//--------->ver todas los años(a los 3)
+//--------->ver todas los tipos
+
+//--------->Buscador por provincia(ofrecer la opcion de combinar con mas filtros)
+//--------->Buscador por año(ofrecer la opcion de combinar con mas filtros)
+//--------->Buscador por tipo(ofrecer la opcion de combinar con mas filtros)
+
+//###################FUNCION LIBERAR MEMORIA###################//
+
 
 #endif
