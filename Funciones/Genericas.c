@@ -4,8 +4,7 @@
 
 /*PROPUESTA ESTRUCTURAS PARA EL ANALISIS
 typedef stuct{
-    int alumnos; --> total de alumnos por provincia (incluyendo todos los
-departamentos); int inicial; int primaria; --> cantidad en cada nivel educativo;
+--> cantidad en cada nivel educativo;
     int secundaria;
     int estatal;
     int privado; --> cantidad en cada sector;
