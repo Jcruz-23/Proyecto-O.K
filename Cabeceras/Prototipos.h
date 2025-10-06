@@ -43,7 +43,7 @@ typedef struct Nodo
     registroTrayecto reg;
     struct Nodo *ant;
     struct Nodo *sig;
-} Registro;
+} Trayectoria;
 
 //--------->Objetivo de funciones<--------
 
