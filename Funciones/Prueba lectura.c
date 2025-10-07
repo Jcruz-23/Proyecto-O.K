@@ -8,7 +8,7 @@ int main(){
     char linea[200000];
     FILE *archivo;
     printf("Abriendo archivo para lectura\n");
-    archivo = fopen("2019_Matricula.csv", "r");
+    archivo = fopen("2019_Trayectoria.csv", "r");
     if(archivo != NULL){
         while(fgets(linea, 200, archivo) != NULL){
             printf("%s", linea);
@@ -18,5 +18,3 @@ int main(){
         printf("\nNo se ha podido abrir el archivo\n");
     }
 }
-
-
