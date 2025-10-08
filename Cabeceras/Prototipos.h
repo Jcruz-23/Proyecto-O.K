@@ -97,7 +97,7 @@ void verTodasLasProvincias(Nodo *Matricula, Nodo *Trayectoria);
 //
 
 void verTodosLosAnios(Nodo *Matricula, Nodo *Trayectoria);
-// Esta funcion deberia depender de la año , lo que se deberia lograr es recorrer todos los datos que tenga guardado el nodo por cada año , es decir, ej: 2020 mostraria todos los registros guardados de matricula y trayectoria de esa año ademas deberia mostrarse por consola como 2 tablas para discriminar cuando es matricula y cuando es trayectoria por cada año escolar.
+// Esta funcion deberia depender del año, lo que se deberia lograr es recorrer todos los datos que tenga guardado el nodo por cada año , es decir, ej: 2020 mostraria todos los registros guardados de matricula y trayectoria de esa año ademas deberia mostrarse por consola como 2 tablas para discriminar cuando es matricula y cuando es trayectoria por cada año escolar.
 // una validacion seria ir mostrando mismo año escolar y misma año y en caso de que algun nodo no tenga misma info que el otro mostrar en consola , contemplar el caso que alguno de los 2 puede no tener informacion de la año analizada o puede tener mas que el otro , en esos casos colocar un cartel que diga "no se encontraron registros" .
 // ********EJEMPLO consola*********
 //                  matriculas 2020                                              trayectorias 2020
