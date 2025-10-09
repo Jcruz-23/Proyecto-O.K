@@ -3,7 +3,6 @@
 #include <string.h>
 
 typedef struct {
-  int anio[6];             // años de escolaridad.
   int secundariaEgresados; // cantidad de egresos.
   int promovidos[6];       // aprobados
   int nopromovidos[6];     // no aprobados
@@ -23,7 +22,6 @@ void ImprimirLista(NodoTrayectoria *);
 void Liberar(NodoTrayectoria **);
 
 int main() {
-  // Menu();
   NodoTrayectoria *registro = NULL;
   InsertarNodoTrayectoria(&registro);
   ImprimirLista(registro);
@@ -71,9 +69,6 @@ void InsertarNodoTrayectoria(NodoTrayectoria **registro) {
             }
 
             nuevo->id = 2019;
-            for (int i = 0; i < 6; i++) {
-              nuevo->trayectoria.anio[i] = i + 1;
-            }
           }
           if (*registro == NULL) {
             *registro = nuevo;
@@ -129,9 +124,6 @@ void InsertarNodoTrayectoria(NodoTrayectoria **registro) {
             }
 
             nuevo->id = 2020;
-            for (int i = 0; i < 6; i++) {
-              nuevo->trayectoria.anio[i] = i + 1;
-            }
           }
           if (*registro == NULL) {
             *registro = nuevo;
@@ -186,9 +178,6 @@ void InsertarNodoTrayectoria(NodoTrayectoria **registro) {
               nuevo->trayectoria.secundariaEgresados = atoi(dato);
             }
             nuevo->id = 2021;
-            for (int i = 0; i < 6; i++) {
-              nuevo->trayectoria.anio[i] = i + 1;
-            }
           }
           if (*registro == NULL) {
             *registro = nuevo;
