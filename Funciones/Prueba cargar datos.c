@@ -35,7 +35,7 @@ typedef struct {
   int promovidos[6];          // aprobados
   int nopromovidos[6];        // no aprobados
   char provincia[25];         // provincia del dato
-  char sector[25];            // estatal o privado
+  char sector[15];            // estatal o privado
 } Trayectoria;
 
 /*typedef struct Nodo {
@@ -317,6 +317,48 @@ void ImprimirLista(NodoTrayectoria *registro) {
         aux->trayectoria.secundariaEgresados[4],
         aux->trayectoria.secundariaEgresados[5], aux->id);
     aux = aux->sig;
+
+    aux = registro;
+
+    FILE *archivo = fopen("Registro Trayectoria.txt", "w");
+    if (archivo == NULL) {
+        printf("Error al abrir archivo de salida\n");
+        return;
+    }
+
+    fprintf(archivo,
+        "%-25s | %-15s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s | "
+        "%-5s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s | "
+        "%-5s | %-5s | %-5s | %-5s | %s\n",
+        "Provincia", "Sector",
+        "1_P", "2_P", "3_P", "4_P", "5_P", "6_P",
+        "1_NP", "2_NP", "3_NP", "4_NP", "5_NP", "6_NP",
+        "1_E", "2_E", "3_E", "4_E", "5_E", "6_E",
+        "Año"
+    );
+
+    while (aux != NULL) {
+        fprintf(archivo,
+            "%-25s | %-15s | %-5d | %-5d | %-5d | %-5d | %-5d | %-5d | "
+            "%-5d | %-5d | %-5d | %-5d | %-5d | %-5d | "
+            "%-5d | %-5d | %-5d | %-5d | %-5d | %-5d | %d\n",
+            aux->trayectoria.provincia, aux->trayectoria.sector,
+            aux->trayectoria.promovidos[0], aux->trayectoria.promovidos[1],
+            aux->trayectoria.promovidos[2], aux->trayectoria.promovidos[3],
+            aux->trayectoria.promovidos[4], aux->trayectoria.promovidos[5],
+            aux->trayectoria.nopromovidos[0], aux->trayectoria.nopromovidos[1],
+            aux->trayectoria.nopromovidos[2], aux->trayectoria.nopromovidos[3],
+            aux->trayectoria.nopromovidos[4], aux->trayectoria.nopromovidos[5],
+            aux->trayectoria.secundariaEgresados[0], aux->trayectoria.secundariaEgresados[1],
+            aux->trayectoria.secundariaEgresados[2], aux->trayectoria.secundariaEgresados[3],
+            aux->trayectoria.secundariaEgresados[4], aux->trayectoria.secundariaEgresados[5],
+            aux->id
+        );
+        aux = aux->sig;
+    }
+
+    fclose(archivo);
+    printf("Datos guardados correctamente\n");
   }
 }
 
