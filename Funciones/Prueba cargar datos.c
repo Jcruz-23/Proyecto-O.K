@@ -118,14 +118,15 @@ void InsertarNodoTrayectoria(NodoTrayectoria **registro) {
   for (int i = 0; i < 3; i++) {
 
     if (i == 0) {
+      char basura[20000];
       char linea[20000];
       FILE *archivo;
       archivo = fopen("2019_Trayectoria.csv", "r");
       if (archivo != NULL) {
         printf("Abriendo archivo para lectura\n");
+        fgets(basura, 20000, archivo);
         while (fgets(linea, 20000, archivo) != NULL) {
-          NodoTrayectoria *nuevo =
-              (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
+          NodoTrayectoria *nuevo = (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
           if (nuevo != NULL) {
             nuevo->sig = NULL;
             char *dato = strtok(linea, ",");
@@ -176,10 +177,12 @@ void InsertarNodoTrayectoria(NodoTrayectoria **registro) {
     }
     if (i == 1) {
       char linea[20000];
+      char basura[20000];
       FILE *archivo;
       archivo = fopen("2020_Trayectoria.csv", "r");
       if (archivo != NULL) {
         printf("Abriendo archivo para lectura\n");
+        fgets(basura, 20000, archivo);
         while (fgets(linea, 20000, archivo) != NULL) {
           NodoTrayectoria *nuevo =
               (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
@@ -232,10 +235,12 @@ void InsertarNodoTrayectoria(NodoTrayectoria **registro) {
     }
     if (i == 2) {
       char linea[20000];
+      char basura[20000];
       FILE *archivo;
       archivo = fopen("2021_Trayectoria.csv", "r");
       if (archivo != NULL) {
         printf("Abriendo archivo para lectura\n");
+        fgets(basura, 20000, archivo);
         while (fgets(linea, 20000, archivo) != NULL) {
           NodoTrayectoria *nuevo =
               (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
