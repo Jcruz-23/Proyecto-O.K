@@ -294,15 +294,15 @@ void InsertarNodoTrayectoria(NodoTrayectoria **registro) {
 void ImprimirLista(NodoTrayectoria *registro) {
   NodoTrayectoria *aux = registro;
   printf(
-      "%-25s | %-25s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s | "
-      "%-5s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s | %s\n",
+      "%-25s | %-25s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | "
+      "%-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %s\n",
       "Provincia", "Sector", "1_P", "2_P", "3_P", "4_P", "5_P", "6_P", "1_NP",
       "2_NP", "3_NP", "4_NP", "5_NP", "6_NP", "1_E", "2_E", "3_E", "4_E", "5_E",
       "6_E", "Anio");
   while (aux != NULL) {
     printf(
-        "%-25s | %-25s | %-5d | %-5d | %-5d | %-5d | %-5d | %-5d | %-5d | %-5d "
-        "| %-5d | %-5d | %-5d | %-5d | %-5d | %-5d | %-5d | %-5d | %-5d | %-5d | %d\n",
+        "%-25s | %-25s | %-4d | %-4d | %-4d | %-4d | %-4d | %-4d | %-4d | %-4d "
+        "| %-4d | %-4d | %-4d | %-4d | %-4d | %-4d | %-4d | %-4d | %-4d | %-4d | %d\n",
         aux->trayectoria.provincia, aux->trayectoria.sector,
         aux->trayectoria.promovidos[0], aux->trayectoria.promovidos[1],
         aux->trayectoria.promovidos[2], aux->trayectoria.promovidos[3],
@@ -317,7 +317,7 @@ void ImprimirLista(NodoTrayectoria *registro) {
         aux->trayectoria.secundariaEgresados[4],
         aux->trayectoria.secundariaEgresados[5], aux->id);
     aux = aux->sig;
-
+}
     aux = registro;
 
     FILE *archivo = fopen("Registro Trayectoria.txt", "w");
@@ -327,9 +327,9 @@ void ImprimirLista(NodoTrayectoria *registro) {
     }
 
     fprintf(archivo,
-        "%-25s | %-15s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s | "
-        "%-5s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s | %-5s | "
-        "%-5s | %-5s | %-5s | %-5s | %s\n",
+        "%-25s | %-15s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | "
+        "%-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | "
+        "%-4s | %-4s | %-4s | %-4s | %s\n",
         "Provincia", "Sector",
         "1_P", "2_P", "3_P", "4_P", "5_P", "6_P",
         "1_NP", "2_NP", "3_NP", "4_NP", "5_NP", "6_NP",
@@ -339,9 +339,9 @@ void ImprimirLista(NodoTrayectoria *registro) {
 
     while (aux != NULL) {
         fprintf(archivo,
-            "%-25s | %-15s | %-5d | %-5d | %-5d | %-5d | %-5d | %-5d | "
-            "%-5d | %-5d | %-5d | %-5d | %-5d | %-5d | "
-            "%-5d | %-5d | %-5d | %-5d | %-5d | %-5d | %d\n",
+            "%-25s | %-15s | %-4d | %-4d | %-4d | %-4d | %-4d | %-4d | "
+            "%-4d | %-4d | %-4d | %-4d | %-4d | %-4d | "
+            "%-4d | %-4d | %-4d | %-4d | %-4d | %-4d | %d\n",
             aux->trayectoria.provincia, aux->trayectoria.sector,
             aux->trayectoria.promovidos[0], aux->trayectoria.promovidos[1],
             aux->trayectoria.promovidos[2], aux->trayectoria.promovidos[3],
@@ -356,11 +356,10 @@ void ImprimirLista(NodoTrayectoria *registro) {
         );
         aux = aux->sig;
     }
-
     fclose(archivo);
     printf("Datos guardados correctamente\n");
   }
-}
+
 
 /*
 void InsertarNodoMatricula(NodoMatricula **p) {
