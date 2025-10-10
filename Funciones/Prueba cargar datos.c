@@ -17,19 +17,20 @@ typedef struct NodoTrayectoria {
   struct NodoTrayectoria *ant;
 } NodoTrayectoria;
 
-void InsertarNodoTrayectoria(NodoTrayectoria **);
+void InsertarNodoTrayectoria(NodoTrayectoria **, Trayectoria);
 void ImprimirLista(NodoTrayectoria *);
 void Liberar(NodoTrayectoria **);
 
 int main() {
   NodoTrayectoria *registro = NULL;
-  InsertarNodoTrayectoria(&registro);
+  Trayectoria trayectoria;
+  InsertarNodoTrayectoria(&registro, trayectoria);
   ImprimirLista(registro);
   Liberar(&registro);
   return 0;
 }
 
-void InsertarNodoTrayectoria(NodoTrayectoria **registro) {
+void InsertarNodoTrayectoria(NodoTrayectoria **registro, Trayectoria trayectoria) {
 
   for (int i = 0; i < 3; i++) {
 
@@ -41,163 +42,184 @@ void InsertarNodoTrayectoria(NodoTrayectoria **registro) {
       if (archivo != NULL) {
         printf("Abriendo archivo para lectura\n");
         fgets(basura, 20000, archivo);
-        while (fgets(linea, 20000, archivo) != NULL) {
-          NodoTrayectoria *nuevo =
-              (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
-          if (nuevo != NULL) {
-            nuevo->sig = NULL;
-            char *dato = strtok(linea, ",");
-            if (dato != NULL) {
-              strcpy(nuevo->trayectoria.provincia, dato);
-            }
-            if ((dato = strtok(NULL, ",")) != NULL) {
-              strcpy(nuevo->trayectoria.sector, dato);
-            }
-            for (int i = 0; i < 6; i++) {
-              if ((dato = strtok(NULL, ",")) != NULL) {
-                nuevo->trayectoria.promovidos[i] = atoi(dato);
+        while (fscanf(archivo,
+                      "%25[^,],%15[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+                      trayectoria.provincia, 
+                      trayectoria.sector,
+                      &trayectoria.promovidos[0],
+                      &trayectoria.promovidos[1],
+                      &trayectoria.promovidos[2],
+                      &trayectoria.promovidos[3],
+                      &trayectoria.promovidos[4],
+                      &trayectoria.promovidos[5],
+                      &trayectoria.nopromovidos[0],
+                      &trayectoria.nopromovidos[1],
+                      &trayectoria.nopromovidos[2],
+                      &trayectoria.nopromovidos[3],
+                      &trayectoria.nopromovidos[4],
+                      &trayectoria.nopromovidos[5],
+                      &trayectoria.secundariaEgresados) == 15) {
+          NodoTrayectoria *nuevo = (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
+          if(nuevo != NULL){
+          strcpy(nuevo->trayectoria.provincia, trayectoria.provincia);
+          strcpy( nuevo->trayectoria.sector, trayectoria.sector);
+              nuevo->trayectoria.promovidos[0] = trayectoria.promovidos[0];
+              nuevo->trayectoria.promovidos[1] = trayectoria.promovidos[1];
+              nuevo->trayectoria.promovidos[2] = trayectoria.promovidos[2];
+              nuevo->trayectoria.promovidos[3] = trayectoria.promovidos[3];
+              nuevo->trayectoria.promovidos[4] = trayectoria.promovidos[4];
+              nuevo->trayectoria.promovidos[5] = trayectoria.promovidos[5];
+              nuevo->trayectoria.nopromovidos[0] = trayectoria.nopromovidos[0];
+              nuevo->trayectoria.nopromovidos[1] = trayectoria.nopromovidos[1];
+              nuevo->trayectoria.nopromovidos[2] = trayectoria.nopromovidos[2];
+              nuevo->trayectoria.nopromovidos[3] = trayectoria.nopromovidos[3];
+              nuevo->trayectoria.nopromovidos[4] = trayectoria.nopromovidos[4];
+              nuevo->trayectoria.nopromovidos[5] = trayectoria.nopromovidos[5];
+              nuevo->trayectoria.secundariaEgresados = trayectoria.secundariaEgresados;
+              nuevo->id = 2019;
+              if (*registro == NULL) {
+                *registro = nuevo;
+              } else {
+                NodoTrayectoria *aux = *registro;
+                while (aux->sig != NULL) {
+                  aux = aux->sig;
+                }
+                aux->sig = nuevo;
               }
-            }
-            for (int i = 0; i < 6; i++) {
-              if ((dato = strtok(NULL, ",")) != NULL) {
-                nuevo->trayectoria.nopromovidos[i] = atoi(dato);
-              }
-            }
-
-            if ((dato = strtok(NULL, ",")) != NULL) {
-              nuevo->trayectoria.secundariaEgresados = atoi(dato);
-            }
-
-            nuevo->id = 2019;
-          }
-          if (*registro == NULL) {
-            *registro = nuevo;
           } else {
-            NodoTrayectoria *aux = *registro;
-            while (aux->sig != NULL) {
-              aux->ant = aux;
-              aux = aux->sig;
-            }
-            aux->sig = nuevo;
+            printf("Error al crear nuevo nodo\n");
           }
         }
-      } else {
-        printf("Error al crear nuevo nodo\n");
+        fclose(archivo);
+        printf("\nEl archivo fue leido con exito\n");
+        }else {
+          printf("\nNo se ha podido abrir el archivo\n");
+        }
       }
-      fclose(archivo);
-      printf("\nEl archivo fue leido con exito\n");
-    } else {
-      printf("\nNo se ha podido abrir el archivo\n");
-    }
-    if (i == 1) {
-      char linea[20000];
+  if (i == 1) {
       char basura[20000];
+      char linea[20000];
       FILE *archivo;
       archivo = fopen("2020_Trayectoria.csv", "r");
       if (archivo != NULL) {
         printf("Abriendo archivo para lectura\n");
         fgets(basura, 20000, archivo);
-        while (fgets(linea, 20000, archivo) != NULL) {
-          NodoTrayectoria *nuevo =
-              (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
-          if (nuevo != NULL) {
-            nuevo->sig = NULL;
-            char *dato = strtok(linea, ",");
-            if (dato != NULL) {
-              strcpy(nuevo->trayectoria.provincia, dato);
-            }
-            if ((dato = strtok(NULL, ",")) != NULL) {
-              strcpy(nuevo->trayectoria.sector, dato);
-            }
-            for (int i = 0; i < 6; i++) {
-              if ((dato = strtok(NULL, ",")) != NULL) {
-                nuevo->trayectoria.promovidos[i] = atoi(dato);
+        while (fscanf(archivo,
+                      "%25[^,],%15[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+                      trayectoria.provincia, 
+                      trayectoria.sector,
+                      &trayectoria.promovidos[0],
+                      &trayectoria.promovidos[1],
+                      &trayectoria.promovidos[2],
+                      &trayectoria.promovidos[3],
+                      &trayectoria.promovidos[4],
+                      &trayectoria.promovidos[5],
+                      &trayectoria.nopromovidos[0],
+                      &trayectoria.nopromovidos[1],
+                      &trayectoria.nopromovidos[2],
+                      &trayectoria.nopromovidos[3],
+                      &trayectoria.nopromovidos[4],
+                      &trayectoria.nopromovidos[5],
+                      &trayectoria.secundariaEgresados) == 15) {
+          NodoTrayectoria *nuevo = (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
+          if(nuevo != NULL){
+          strcpy(nuevo->trayectoria.provincia, trayectoria.provincia);
+          strcpy( nuevo->trayectoria.sector, trayectoria.sector);
+              nuevo->trayectoria.promovidos[0] = trayectoria.promovidos[0];
+              nuevo->trayectoria.promovidos[1] = trayectoria.promovidos[1];
+              nuevo->trayectoria.promovidos[2] = trayectoria.promovidos[2];
+              nuevo->trayectoria.promovidos[3] = trayectoria.promovidos[3];
+              nuevo->trayectoria.promovidos[4] = trayectoria.promovidos[4];
+              nuevo->trayectoria.promovidos[5] = trayectoria.promovidos[5];
+              nuevo->trayectoria.nopromovidos[0] = trayectoria.nopromovidos[0];
+              nuevo->trayectoria.nopromovidos[1] = trayectoria.nopromovidos[1];
+              nuevo->trayectoria.nopromovidos[2] = trayectoria.nopromovidos[2];
+              nuevo->trayectoria.nopromovidos[3] = trayectoria.nopromovidos[3];
+              nuevo->trayectoria.nopromovidos[4] = trayectoria.nopromovidos[4];
+              nuevo->trayectoria.nopromovidos[5] = trayectoria.nopromovidos[5];
+              nuevo->trayectoria.secundariaEgresados = trayectoria.secundariaEgresados;
+              nuevo->id = 2020;
+              if (*registro == NULL) {
+                *registro = nuevo;
+              } else {
+                NodoTrayectoria *aux = *registro;
+                while (aux->sig != NULL) {
+                  aux = aux->sig;
+                }
+                aux->sig = nuevo;
               }
-            }
-            for (int i = 0; i < 6; i++) {
-              if ((dato = strtok(NULL, ",")) != NULL) {
-                nuevo->trayectoria.nopromovidos[i] = atoi(dato);
-              }
-            }
-            if ((dato = strtok(NULL, ",")) != NULL) {
-              nuevo->trayectoria.secundariaEgresados = atoi(dato);
-            }
-
-            nuevo->id = 2020;
-          }
-          if (*registro == NULL) {
-            *registro = nuevo;
           } else {
-            NodoTrayectoria *aux = *registro;
-            while (aux->sig != NULL) {
-              aux->ant = aux;
-              aux = aux->sig;
-            }
-            aux->sig = nuevo;
+            printf("Error al crear nuevo nodo\n");
           }
         }
-      } else {
-        printf("Error al crear nuevo nodo\n");
+        fclose(archivo);
+        printf("\nEl archivo fue leido con exito\n");
+        }else {
+          printf("\nNo se ha podido abrir el archivo\n");
+        }
       }
-      fclose(archivo);
-      printf("\nEl archivo fue leido con exito\n");
-    } else {
-      printf("\nNo se ha podido abrir el archivo\n");
-    }
-    if (i == 2) {
-      char linea[20000];
+  if (i == 2) {
       char basura[20000];
+      char linea[20000];
       FILE *archivo;
       archivo = fopen("2021_Trayectoria.csv", "r");
       if (archivo != NULL) {
         printf("Abriendo archivo para lectura\n");
         fgets(basura, 20000, archivo);
-        while (fgets(linea, 20000, archivo) != NULL) {
-          NodoTrayectoria *nuevo =
-              (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
-          if (nuevo != NULL) {
-            nuevo->sig = NULL;
-            char *dato = strtok(linea, ",");
-            if (dato != NULL) {
-              strcpy(nuevo->trayectoria.provincia, dato);
-            }
-            if ((dato = strtok(NULL, ",")) != NULL) {
-              strcpy(nuevo->trayectoria.sector, dato);
-            }
-            for (int i = 0; i < 6; i++) {
-              if ((dato = strtok(NULL, ",")) != NULL) {
-                nuevo->trayectoria.promovidos[i] = atoi(dato);
+        while (fscanf(archivo,
+                  "%25[^,],%15[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+                      trayectoria.provincia, 
+                      trayectoria.sector,
+                      &trayectoria.promovidos[0],
+                      &trayectoria.promovidos[1],
+                      &trayectoria.promovidos[2],
+                      &trayectoria.promovidos[3],
+                      &trayectoria.promovidos[4],
+                      &trayectoria.promovidos[5],
+                      &trayectoria.nopromovidos[0],
+                      &trayectoria.nopromovidos[1],
+                      &trayectoria.nopromovidos[2],
+                      &trayectoria.nopromovidos[3],
+                      &trayectoria.nopromovidos[4],
+                      &trayectoria.nopromovidos[5],
+                      &trayectoria.secundariaEgresados) == 15) {
+          NodoTrayectoria *nuevo = (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
+          if(nuevo != NULL){
+          strcpy(nuevo->trayectoria.provincia, trayectoria.provincia);
+          strcpy( nuevo->trayectoria.sector, trayectoria.sector);
+              nuevo->trayectoria.promovidos[0] = trayectoria.promovidos[0];
+              nuevo->trayectoria.promovidos[1] = trayectoria.promovidos[1];
+              nuevo->trayectoria.promovidos[2] = trayectoria.promovidos[2];
+              nuevo->trayectoria.promovidos[3] = trayectoria.promovidos[3];
+              nuevo->trayectoria.promovidos[4] = trayectoria.promovidos[4];
+              nuevo->trayectoria.promovidos[5] = trayectoria.promovidos[5];
+              nuevo->trayectoria.nopromovidos[0] = trayectoria.nopromovidos[0];
+              nuevo->trayectoria.nopromovidos[1] = trayectoria.nopromovidos[1];
+              nuevo->trayectoria.nopromovidos[2] = trayectoria.nopromovidos[2];
+              nuevo->trayectoria.nopromovidos[3] = trayectoria.nopromovidos[3];
+              nuevo->trayectoria.nopromovidos[4] = trayectoria.nopromovidos[4];
+              nuevo->trayectoria.nopromovidos[5] = trayectoria.nopromovidos[5];
+              nuevo->trayectoria.secundariaEgresados = trayectoria.secundariaEgresados;
+              nuevo->id = 2021;
+              if (*registro == NULL) {
+                *registro = nuevo;
+              } else {
+                NodoTrayectoria *aux = *registro;
+                while (aux->sig != NULL) {
+                  aux = aux->sig;
+                }
+                aux->sig = nuevo;
               }
-            }
-            for (int i = 0; i < 6; i++) {
-              if ((dato = strtok(NULL, ",")) != NULL) {
-                nuevo->trayectoria.nopromovidos[i] = atoi(dato);
-              }
-            }
-            if ((dato = strtok(NULL, ",")) != NULL) {
-              nuevo->trayectoria.secundariaEgresados = atoi(dato);
-            }
-            nuevo->id = 2021;
-          }
-          if (*registro == NULL) {
-            *registro = nuevo;
           } else {
-            NodoTrayectoria *aux = *registro;
-            while (aux->sig != NULL) {
-              aux->ant = aux;
-              aux = aux->sig;
-            }
-            aux->sig = nuevo;
+            printf("Error al crear nuevo nodo\n");
           }
         }
-      } else {
-        printf("Error al crear nuevo nodo\n");
-      }
-      fclose(archivo);
-      printf("\nEl archivo fue leido con exito\n");
-    } else {
-      printf("\nNo se ha podido abrir el archivo\n");
-    }
+        fclose(archivo);
+        printf("\nEl archivo fue leido con exito\n");
+        }else {
+          printf("\nNo se ha podido abrir el archivo\n");
+        }
+}
   }
 }
 
