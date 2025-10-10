@@ -24,7 +24,7 @@ int Lectura(Trayectoria *, FILE *);
 
 int main() {
   NodoTrayectoria *registro = NULL;
-  Trayectoria trayectoria;
+  Trayectoria trayectoria = {0};
   InsertarNodoTrayectoria(&registro, trayectoria);
   ImprimirLista(registro);
   Liberar(&registro);
