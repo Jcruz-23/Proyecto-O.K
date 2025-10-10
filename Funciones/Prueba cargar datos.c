@@ -20,6 +20,7 @@ typedef struct NodoTrayectoria {
 void InsertarNodoTrayectoria(NodoTrayectoria **, Trayectoria);
 void ImprimirLista(NodoTrayectoria *);
 void Liberar(NodoTrayectoria **);
+int Lectura(Trayectoria *, FILE *);
 
 int main() {
   NodoTrayectoria *registro = NULL;
@@ -33,194 +34,171 @@ int main() {
 void InsertarNodoTrayectoria(NodoTrayectoria **registro, Trayectoria trayectoria) {
 
   for (int i = 0; i < 3; i++) {
-
+    
     if (i == 0) {
       char basura[20000];
-      char linea[20000];
       FILE *archivo;
       archivo = fopen("2019_Trayectoria.csv", "r");
-      if (archivo != NULL) {
-        printf("Abriendo archivo para lectura\n");
+      if (archivo == NULL) {
+        printf("\nNo se pudo leer el archivo\n");
+      } else {
         fgets(basura, 20000, archivo);
-        while (fscanf(archivo,
-                      "%25[^,],%15[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-                      trayectoria.provincia, 
-                      trayectoria.sector,
-                      &trayectoria.promovidos[0],
-                      &trayectoria.promovidos[1],
-                      &trayectoria.promovidos[2],
-                      &trayectoria.promovidos[3],
-                      &trayectoria.promovidos[4],
-                      &trayectoria.promovidos[5],
-                      &trayectoria.nopromovidos[0],
-                      &trayectoria.nopromovidos[1],
-                      &trayectoria.nopromovidos[2],
-                      &trayectoria.nopromovidos[3],
-                      &trayectoria.nopromovidos[4],
-                      &trayectoria.nopromovidos[5],
-                      &trayectoria.secundariaEgresados) == 15) {
-          NodoTrayectoria *nuevo = (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
-          if(nuevo != NULL){
-          strcpy(nuevo->trayectoria.provincia, trayectoria.provincia);
-          strcpy( nuevo->trayectoria.sector, trayectoria.sector);
-              nuevo->trayectoria.promovidos[0] = trayectoria.promovidos[0];
-              nuevo->trayectoria.promovidos[1] = trayectoria.promovidos[1];
-              nuevo->trayectoria.promovidos[2] = trayectoria.promovidos[2];
-              nuevo->trayectoria.promovidos[3] = trayectoria.promovidos[3];
-              nuevo->trayectoria.promovidos[4] = trayectoria.promovidos[4];
-              nuevo->trayectoria.promovidos[5] = trayectoria.promovidos[5];
-              nuevo->trayectoria.nopromovidos[0] = trayectoria.nopromovidos[0];
-              nuevo->trayectoria.nopromovidos[1] = trayectoria.nopromovidos[1];
-              nuevo->trayectoria.nopromovidos[2] = trayectoria.nopromovidos[2];
-              nuevo->trayectoria.nopromovidos[3] = trayectoria.nopromovidos[3];
-              nuevo->trayectoria.nopromovidos[4] = trayectoria.nopromovidos[4];
-              nuevo->trayectoria.nopromovidos[5] = trayectoria.nopromovidos[5];
-              nuevo->trayectoria.secundariaEgresados = trayectoria.secundariaEgresados;
-              nuevo->id = 2019;
-              if (*registro == NULL) {
-                *registro = nuevo;
-              } else {
-                NodoTrayectoria *aux = *registro;
-                while (aux->sig != NULL) {
-                  aux = aux->sig;
-                }
-                aux->sig = nuevo;
+        while ((Lectura(&trayectoria, archivo)) == 15) {
+          NodoTrayectoria *nuevo =
+              (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
+          if (nuevo != NULL) {
+            nuevo->sig = NULL;
+            strcpy(nuevo->trayectoria.provincia, trayectoria.provincia);
+            strcpy(nuevo->trayectoria.sector, trayectoria.sector);
+            nuevo->trayectoria.promovidos[0] = trayectoria.promovidos[0];
+            nuevo->trayectoria.promovidos[1] = trayectoria.promovidos[1];
+            nuevo->trayectoria.promovidos[2] = trayectoria.promovidos[2];
+            nuevo->trayectoria.promovidos[3] = trayectoria.promovidos[3];
+            nuevo->trayectoria.promovidos[4] = trayectoria.promovidos[4];
+            nuevo->trayectoria.promovidos[5] = trayectoria.promovidos[5];
+            nuevo->trayectoria.nopromovidos[0] = trayectoria.nopromovidos[0];
+            nuevo->trayectoria.nopromovidos[1] = trayectoria.nopromovidos[1];
+            nuevo->trayectoria.nopromovidos[2] = trayectoria.nopromovidos[2];
+            nuevo->trayectoria.nopromovidos[3] = trayectoria.nopromovidos[3];
+            nuevo->trayectoria.nopromovidos[4] = trayectoria.nopromovidos[4];
+            nuevo->trayectoria.nopromovidos[5] = trayectoria.nopromovidos[5];
+            nuevo->trayectoria.secundariaEgresados =
+                trayectoria.secundariaEgresados;
+            nuevo->id = 2019;
+            if (*registro == NULL) {
+              *registro = nuevo;
+              nuevo->ant = NULL;
+            } else {
+              NodoTrayectoria *aux = *registro;
+              while (aux->sig != NULL) {
+                aux = aux->sig;
               }
+              nuevo->ant = aux;
+              aux->sig = nuevo;
+            }
           } else {
             printf("Error al crear nuevo nodo\n");
           }
         }
-        fclose(archivo);
-        printf("\nEl archivo fue leido con exito\n");
-        }else {
-          printf("\nNo se ha podido abrir el archivo\n");
-        }
       }
-  if (i == 1) {
+      fclose(archivo);
+      printf("\nArchivo leido con exito\n");
+    }
+
+    if (i == 1) {
       char basura[20000];
-      char linea[20000];
       FILE *archivo;
       archivo = fopen("2020_Trayectoria.csv", "r");
-      if (archivo != NULL) {
-        printf("Abriendo archivo para lectura\n");
+      if (archivo == NULL) {
+        printf("\nNo se pudo leer el archivo\n");
+      } else {
         fgets(basura, 20000, archivo);
-        while (fscanf(archivo,
-                      "%25[^,],%15[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-                      trayectoria.provincia, 
-                      trayectoria.sector,
-                      &trayectoria.promovidos[0],
-                      &trayectoria.promovidos[1],
-                      &trayectoria.promovidos[2],
-                      &trayectoria.promovidos[3],
-                      &trayectoria.promovidos[4],
-                      &trayectoria.promovidos[5],
-                      &trayectoria.nopromovidos[0],
-                      &trayectoria.nopromovidos[1],
-                      &trayectoria.nopromovidos[2],
-                      &trayectoria.nopromovidos[3],
-                      &trayectoria.nopromovidos[4],
-                      &trayectoria.nopromovidos[5],
-                      &trayectoria.secundariaEgresados) == 15) {
-          NodoTrayectoria *nuevo = (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
-          if(nuevo != NULL){
-          strcpy(nuevo->trayectoria.provincia, trayectoria.provincia);
-          strcpy( nuevo->trayectoria.sector, trayectoria.sector);
-              nuevo->trayectoria.promovidos[0] = trayectoria.promovidos[0];
-              nuevo->trayectoria.promovidos[1] = trayectoria.promovidos[1];
-              nuevo->trayectoria.promovidos[2] = trayectoria.promovidos[2];
-              nuevo->trayectoria.promovidos[3] = trayectoria.promovidos[3];
-              nuevo->trayectoria.promovidos[4] = trayectoria.promovidos[4];
-              nuevo->trayectoria.promovidos[5] = trayectoria.promovidos[5];
-              nuevo->trayectoria.nopromovidos[0] = trayectoria.nopromovidos[0];
-              nuevo->trayectoria.nopromovidos[1] = trayectoria.nopromovidos[1];
-              nuevo->trayectoria.nopromovidos[2] = trayectoria.nopromovidos[2];
-              nuevo->trayectoria.nopromovidos[3] = trayectoria.nopromovidos[3];
-              nuevo->trayectoria.nopromovidos[4] = trayectoria.nopromovidos[4];
-              nuevo->trayectoria.nopromovidos[5] = trayectoria.nopromovidos[5];
-              nuevo->trayectoria.secundariaEgresados = trayectoria.secundariaEgresados;
-              nuevo->id = 2020;
-              if (*registro == NULL) {
-                *registro = nuevo;
-              } else {
-                NodoTrayectoria *aux = *registro;
-                while (aux->sig != NULL) {
-                  aux = aux->sig;
-                }
-                aux->sig = nuevo;
+        while ((Lectura(&trayectoria, archivo)) == 15) {
+          NodoTrayectoria *nuevo =
+              (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
+          if (nuevo != NULL) {
+            nuevo->sig = NULL;
+            strcpy(nuevo->trayectoria.provincia, trayectoria.provincia);
+            strcpy(nuevo->trayectoria.sector, trayectoria.sector);
+            nuevo->trayectoria.promovidos[0] = trayectoria.promovidos[0];
+            nuevo->trayectoria.promovidos[1] = trayectoria.promovidos[1];
+            nuevo->trayectoria.promovidos[2] = trayectoria.promovidos[2];
+            nuevo->trayectoria.promovidos[3] = trayectoria.promovidos[3];
+            nuevo->trayectoria.promovidos[4] = trayectoria.promovidos[4];
+            nuevo->trayectoria.promovidos[5] = trayectoria.promovidos[5];
+            nuevo->trayectoria.nopromovidos[0] = trayectoria.nopromovidos[0];
+            nuevo->trayectoria.nopromovidos[1] = trayectoria.nopromovidos[1];
+            nuevo->trayectoria.nopromovidos[2] = trayectoria.nopromovidos[2];
+            nuevo->trayectoria.nopromovidos[3] = trayectoria.nopromovidos[3];
+            nuevo->trayectoria.nopromovidos[4] = trayectoria.nopromovidos[4];
+            nuevo->trayectoria.nopromovidos[5] = trayectoria.nopromovidos[5];
+            nuevo->trayectoria.secundariaEgresados =
+                trayectoria.secundariaEgresados;
+            nuevo->id = 2020;
+            if (*registro == NULL) {
+              *registro = nuevo;
+              nuevo->ant = NULL;
+            } else {
+              NodoTrayectoria *aux = *registro;
+              while (aux->sig != NULL) {
+                aux = aux->sig;
               }
+              nuevo->ant = aux;
+              aux->sig = nuevo;
+            }
           } else {
             printf("Error al crear nuevo nodo\n");
           }
-        }
-        fclose(archivo);
-        printf("\nEl archivo fue leido con exito\n");
-        }else {
-          printf("\nNo se ha podido abrir el archivo\n");
         }
       }
-  if (i == 2) {
+      fclose(archivo);
+      printf("\nArchivo leido con exito\n");
+    }
+    if (i == 2) {
       char basura[20000];
-      char linea[20000];
       FILE *archivo;
       archivo = fopen("2021_Trayectoria.csv", "r");
-      if (archivo != NULL) {
-        printf("Abriendo archivo para lectura\n");
+      if (archivo == NULL) {
+        printf("\nNo se pudo leer el archivo\n");
+      } else {
         fgets(basura, 20000, archivo);
-        while (fscanf(archivo,
-                  "%25[^,],%15[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-                      trayectoria.provincia, 
-                      trayectoria.sector,
-                      &trayectoria.promovidos[0],
-                      &trayectoria.promovidos[1],
-                      &trayectoria.promovidos[2],
-                      &trayectoria.promovidos[3],
-                      &trayectoria.promovidos[4],
-                      &trayectoria.promovidos[5],
-                      &trayectoria.nopromovidos[0],
-                      &trayectoria.nopromovidos[1],
-                      &trayectoria.nopromovidos[2],
-                      &trayectoria.nopromovidos[3],
-                      &trayectoria.nopromovidos[4],
-                      &trayectoria.nopromovidos[5],
-                      &trayectoria.secundariaEgresados) == 15) {
-          NodoTrayectoria *nuevo = (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
-          if(nuevo != NULL){
-          strcpy(nuevo->trayectoria.provincia, trayectoria.provincia);
-          strcpy( nuevo->trayectoria.sector, trayectoria.sector);
-              nuevo->trayectoria.promovidos[0] = trayectoria.promovidos[0];
-              nuevo->trayectoria.promovidos[1] = trayectoria.promovidos[1];
-              nuevo->trayectoria.promovidos[2] = trayectoria.promovidos[2];
-              nuevo->trayectoria.promovidos[3] = trayectoria.promovidos[3];
-              nuevo->trayectoria.promovidos[4] = trayectoria.promovidos[4];
-              nuevo->trayectoria.promovidos[5] = trayectoria.promovidos[5];
-              nuevo->trayectoria.nopromovidos[0] = trayectoria.nopromovidos[0];
-              nuevo->trayectoria.nopromovidos[1] = trayectoria.nopromovidos[1];
-              nuevo->trayectoria.nopromovidos[2] = trayectoria.nopromovidos[2];
-              nuevo->trayectoria.nopromovidos[3] = trayectoria.nopromovidos[3];
-              nuevo->trayectoria.nopromovidos[4] = trayectoria.nopromovidos[4];
-              nuevo->trayectoria.nopromovidos[5] = trayectoria.nopromovidos[5];
-              nuevo->trayectoria.secundariaEgresados = trayectoria.secundariaEgresados;
-              nuevo->id = 2021;
-              if (*registro == NULL) {
-                *registro = nuevo;
-              } else {
-                NodoTrayectoria *aux = *registro;
-                while (aux->sig != NULL) {
-                  aux = aux->sig;
-                }
-                aux->sig = nuevo;
+        while ((Lectura(&trayectoria, archivo)) == 15) {
+          NodoTrayectoria *nuevo =
+              (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
+          if (nuevo != NULL) {
+            nuevo->sig = NULL;
+            strcpy(nuevo->trayectoria.provincia, trayectoria.provincia);
+            strcpy(nuevo->trayectoria.sector, trayectoria.sector);
+            nuevo->trayectoria.promovidos[0] = trayectoria.promovidos[0];
+            nuevo->trayectoria.promovidos[1] = trayectoria.promovidos[1];
+            nuevo->trayectoria.promovidos[2] = trayectoria.promovidos[2];
+            nuevo->trayectoria.promovidos[3] = trayectoria.promovidos[3];
+            nuevo->trayectoria.promovidos[4] = trayectoria.promovidos[4];
+            nuevo->trayectoria.promovidos[5] = trayectoria.promovidos[5];
+            nuevo->trayectoria.nopromovidos[0] = trayectoria.nopromovidos[0];
+            nuevo->trayectoria.nopromovidos[1] = trayectoria.nopromovidos[1];
+            nuevo->trayectoria.nopromovidos[2] = trayectoria.nopromovidos[2];
+            nuevo->trayectoria.nopromovidos[3] = trayectoria.nopromovidos[3];
+            nuevo->trayectoria.nopromovidos[4] = trayectoria.nopromovidos[4];
+            nuevo->trayectoria.nopromovidos[5] = trayectoria.nopromovidos[5];
+            nuevo->trayectoria.secundariaEgresados =
+                trayectoria.secundariaEgresados;
+            nuevo->id = 2021;
+            if (*registro == NULL) {
+              *registro = nuevo;
+              nuevo->ant = NULL;
+            } else {
+              NodoTrayectoria *aux = *registro;
+              while (aux->sig != NULL) {
+                aux = aux->sig;
               }
+              nuevo->ant = aux;
+              aux->sig = nuevo;
+            }
           } else {
             printf("Error al crear nuevo nodo\n");
           }
         }
-        fclose(archivo);
-        printf("\nEl archivo fue leido con exito\n");
-        }else {
-          printf("\nNo se ha podido abrir el archivo\n");
-        }
-}
+      }
+      fclose(archivo);
+      printf("\nArchivo leido con exito\n");
+    }
   }
+}
+
+int Lectura(Trayectoria *trayectoria, FILE *archivo) {
+  int cant = 0;
+  printf("Abriendo archivo para lectura\n");
+  cant = (fscanf(
+      archivo, "%25[^,],%15[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+      trayectoria->provincia, trayectoria->sector, &trayectoria->promovidos[0],
+      &trayectoria->promovidos[1], &trayectoria->promovidos[2],
+      &trayectoria->promovidos[3], &trayectoria->promovidos[4],
+      &trayectoria->promovidos[5], &trayectoria->nopromovidos[0],
+      &trayectoria->nopromovidos[1], &trayectoria->nopromovidos[2],
+      &trayectoria->nopromovidos[3], &trayectoria->nopromovidos[4],
+      &trayectoria->nopromovidos[5], &trayectoria->secundariaEgresados));
+  return cant;
 }
 
 void ImprimirLista(NodoTrayectoria *registro) {
