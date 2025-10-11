@@ -7,7 +7,7 @@ typedef struct {
   int promovidos[6];       // aprobados
   int nopromovidos[6];     // no aprobados
   char provincia[25];      // provincia del dato
-  char sector[15];         // estatal o privado
+  char sector[10];         // estatal o privado
 } Trayectoria;
 
 typedef struct NodoTrayectoria {
@@ -21,6 +21,7 @@ void InsertarNodoTrayectoria(NodoTrayectoria **, Trayectoria);
 void ImprimirLista(NodoTrayectoria *);
 void Liberar(NodoTrayectoria **);
 int Lectura(Trayectoria *, FILE *);
+void Carga(NodoTrayectoria **, Trayectoria);
 
 int main() {
   NodoTrayectoria *registro = NULL;
@@ -47,23 +48,7 @@ void InsertarNodoTrayectoria(NodoTrayectoria **registro, Trayectoria trayectoria
           NodoTrayectoria *nuevo =
               (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
           if (nuevo != NULL) {
-            nuevo->sig = NULL;
-            strcpy(nuevo->trayectoria.provincia, trayectoria.provincia);
-            strcpy(nuevo->trayectoria.sector, trayectoria.sector);
-            nuevo->trayectoria.promovidos[0] = trayectoria.promovidos[0];
-            nuevo->trayectoria.promovidos[1] = trayectoria.promovidos[1];
-            nuevo->trayectoria.promovidos[2] = trayectoria.promovidos[2];
-            nuevo->trayectoria.promovidos[3] = trayectoria.promovidos[3];
-            nuevo->trayectoria.promovidos[4] = trayectoria.promovidos[4];
-            nuevo->trayectoria.promovidos[5] = trayectoria.promovidos[5];
-            nuevo->trayectoria.nopromovidos[0] = trayectoria.nopromovidos[0];
-            nuevo->trayectoria.nopromovidos[1] = trayectoria.nopromovidos[1];
-            nuevo->trayectoria.nopromovidos[2] = trayectoria.nopromovidos[2];
-            nuevo->trayectoria.nopromovidos[3] = trayectoria.nopromovidos[3];
-            nuevo->trayectoria.nopromovidos[4] = trayectoria.nopromovidos[4];
-            nuevo->trayectoria.nopromovidos[5] = trayectoria.nopromovidos[5];
-            nuevo->trayectoria.secundariaEgresados =
-                trayectoria.secundariaEgresados;
+            Carga(&nuevo, trayectoria);
             nuevo->id = 2019;
             if (*registro == NULL) {
               *registro = nuevo;
@@ -97,23 +82,7 @@ void InsertarNodoTrayectoria(NodoTrayectoria **registro, Trayectoria trayectoria
           NodoTrayectoria *nuevo =
               (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
           if (nuevo != NULL) {
-            nuevo->sig = NULL;
-            strcpy(nuevo->trayectoria.provincia, trayectoria.provincia);
-            strcpy(nuevo->trayectoria.sector, trayectoria.sector);
-            nuevo->trayectoria.promovidos[0] = trayectoria.promovidos[0];
-            nuevo->trayectoria.promovidos[1] = trayectoria.promovidos[1];
-            nuevo->trayectoria.promovidos[2] = trayectoria.promovidos[2];
-            nuevo->trayectoria.promovidos[3] = trayectoria.promovidos[3];
-            nuevo->trayectoria.promovidos[4] = trayectoria.promovidos[4];
-            nuevo->trayectoria.promovidos[5] = trayectoria.promovidos[5];
-            nuevo->trayectoria.nopromovidos[0] = trayectoria.nopromovidos[0];
-            nuevo->trayectoria.nopromovidos[1] = trayectoria.nopromovidos[1];
-            nuevo->trayectoria.nopromovidos[2] = trayectoria.nopromovidos[2];
-            nuevo->trayectoria.nopromovidos[3] = trayectoria.nopromovidos[3];
-            nuevo->trayectoria.nopromovidos[4] = trayectoria.nopromovidos[4];
-            nuevo->trayectoria.nopromovidos[5] = trayectoria.nopromovidos[5];
-            nuevo->trayectoria.secundariaEgresados =
-                trayectoria.secundariaEgresados;
+            Carga(&nuevo, trayectoria);
             nuevo->id = 2020;
             if (*registro == NULL) {
               *registro = nuevo;
@@ -146,23 +115,7 @@ void InsertarNodoTrayectoria(NodoTrayectoria **registro, Trayectoria trayectoria
           NodoTrayectoria *nuevo =
               (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
           if (nuevo != NULL) {
-            nuevo->sig = NULL;
-            strcpy(nuevo->trayectoria.provincia, trayectoria.provincia);
-            strcpy(nuevo->trayectoria.sector, trayectoria.sector);
-            nuevo->trayectoria.promovidos[0] = trayectoria.promovidos[0];
-            nuevo->trayectoria.promovidos[1] = trayectoria.promovidos[1];
-            nuevo->trayectoria.promovidos[2] = trayectoria.promovidos[2];
-            nuevo->trayectoria.promovidos[3] = trayectoria.promovidos[3];
-            nuevo->trayectoria.promovidos[4] = trayectoria.promovidos[4];
-            nuevo->trayectoria.promovidos[5] = trayectoria.promovidos[5];
-            nuevo->trayectoria.nopromovidos[0] = trayectoria.nopromovidos[0];
-            nuevo->trayectoria.nopromovidos[1] = trayectoria.nopromovidos[1];
-            nuevo->trayectoria.nopromovidos[2] = trayectoria.nopromovidos[2];
-            nuevo->trayectoria.nopromovidos[3] = trayectoria.nopromovidos[3];
-            nuevo->trayectoria.nopromovidos[4] = trayectoria.nopromovidos[4];
-            nuevo->trayectoria.nopromovidos[5] = trayectoria.nopromovidos[5];
-            nuevo->trayectoria.secundariaEgresados =
-                trayectoria.secundariaEgresados;
+            Carga(&nuevo, trayectoria);
             nuevo->id = 2021;
             if (*registro == NULL) {
               *registro = nuevo;
@@ -199,6 +152,26 @@ int Lectura(Trayectoria *trayectoria, FILE *archivo) {
       &trayectoria->nopromovidos[3], &trayectoria->nopromovidos[4],
       &trayectoria->nopromovidos[5], &trayectoria->secundariaEgresados));
   return cant;
+}
+
+void Carga(NodoTrayectoria **nuevo, Trayectoria trayectoria){
+            (*nuevo)->sig = NULL;
+            strcpy((*nuevo)->trayectoria.provincia, trayectoria.provincia);
+            strcpy((*nuevo)->trayectoria.sector, trayectoria.sector);
+            (*nuevo)->trayectoria.promovidos[0] = trayectoria.promovidos[0];
+            (*nuevo)->trayectoria.promovidos[1] = trayectoria.promovidos[1];
+            (*nuevo)->trayectoria.promovidos[2] = trayectoria.promovidos[2];
+            (*nuevo)->trayectoria.promovidos[3] = trayectoria.promovidos[3];
+            (*nuevo)->trayectoria.promovidos[4] = trayectoria.promovidos[4];
+            (*nuevo)->trayectoria.promovidos[5] = trayectoria.promovidos[5];
+            (*nuevo)->trayectoria.nopromovidos[0] = trayectoria.nopromovidos[0];
+            (*nuevo)->trayectoria.nopromovidos[1] = trayectoria.nopromovidos[1];
+            (*nuevo)->trayectoria.nopromovidos[2] = trayectoria.nopromovidos[2];
+            (*nuevo)->trayectoria.nopromovidos[3] = trayectoria.nopromovidos[3];
+            (*nuevo)->trayectoria.nopromovidos[4] = trayectoria.nopromovidos[4];
+            (*nuevo)->trayectoria.nopromovidos[5] = trayectoria.nopromovidos[5];
+            (*nuevo)->trayectoria.secundariaEgresados =
+                trayectoria.secundariaEgresados;
 }
 
 void ImprimirLista(NodoTrayectoria *registro) {
