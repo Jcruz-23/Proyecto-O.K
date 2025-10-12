@@ -177,79 +177,87 @@ void Carga(NodoTrayectoria **nuevo, Trayectoria trayectoria) {
 }
 
 void Clasificacion(NodoTrayectoria *registro, NodoTrayectoria **NuevoRegistro) {
- NodoTrayectoria *temp = registro;
+  NodoTrayectoria *temp = registro;
 
   while (temp != NULL) {
-    char provincia[25];
-    char sector[10];
-    int anio = temp->id;
-    strcpy(provincia, temp->provincia);
-    strcpy(sector, temp->sector);
-    NodoTrayectoria *aux = *NuevoRegistro;
+
     int bandera = 0;
-    
-    while(aux != NULL && bandera == 0){
-    if(strcmp(provincia, aux->provincia) == 0 && strcmp(sector, aux->sector) == 0 && anio == aux->id){ //Buscar nodo en la lista nueva primero
-      bandera = 1;
-    }else{
-      aux = aux->sig; //Avanza hasta encontrar el nodo con las coincidencias
+    NodoTrayectoria *aux = *NuevoRegistro;
+
+    while (aux != NULL && bandera == 0) {
+      if (strcmp(temp->provincia, aux->provincia) == 0 &&
+          strcmp(temp->sector, aux->sector) == 0 &&
+          temp->id == aux->id) { // Buscar nodo en la lista nueva primero
+        bandera = 1;
+      } else {
+        aux = aux->sig; // Avanza hasta encontrar el nodo con las coincidencias
       }
-  }if(bandera){  //Si encuentra coincidencias las suma a nuestro nodo
-    for(int i = 0; i < 6; i++){
-      aux->trayectoria.nopromovidos[i] += temp->trayectoria.nopromovidos[i];
-      aux->trayectoria.promovidos[i] += temp->trayectoria.promovidos[i];
     }
-    aux->trayectoria.secundariaEgresados += temp->trayectoria.secundariaEgresados;
-  }else{ //Si no las encuentra crea un nuevo nodo y lo agrega a la lista nueva
-    NodoTrayectoria *nuevo = (NodoTrayectoria *) malloc(sizeof(NodoTrayectoria));
-    if(nuevo != NULL){
-    nuevo->ant = NULL;
-    nuevo->sig = NULL;
-    strcpy(nuevo->provincia, temp->provincia);
-    strcpy(nuevo->sector, temp->sector);
-    nuevo->id = temp->id;
-       for(int i = 0; i < 6; i++){
-      nuevo->trayectoria.nopromovidos[i] = temp->trayectoria.nopromovidos[i];
-      nuevo->trayectoria.promovidos[i] = temp->trayectoria.promovidos[i];
-    }
-    nuevo->trayectoria.secundariaEgresados = temp->trayectoria.secundariaEgresados;
-    //Agregando a la lista nueva
-    if(*NuevoRegistro == NULL){
-      *NuevoRegistro = nuevo;
-      nuevo->ant = NULL;
-    }else{
-      NodoTrayectoria *aux2 = *NuevoRegistro;
-      while(aux2->sig != NULL){
-        aux2 = aux2->sig;
+    if (bandera) { // Si encuentra coincidencias las suma a nuestro nodo
+      for (int i = 0; i < 6; i++) {
+        aux->trayectoria.nopromovidos[i] += temp->trayectoria.nopromovidos[i];
+        aux->trayectoria.promovidos[i] += temp->trayectoria.promovidos[i];
       }
-      nuevo->ant = aux2;
-      aux2->sig = nuevo;
-      nuevo->sig = NULL;
+      aux->trayectoria.secundariaEgresados +=
+          temp->trayectoria.secundariaEgresados;
+
+    } else { // Si no las encuentra crea un nuevo nodo y lo agrega a la lista
+             // nueva
+      NodoTrayectoria *nuevo =
+          (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
+      if (nuevo != NULL) {
+        nuevo->ant = NULL;
+        nuevo->sig = NULL;
+        strcpy(nuevo->provincia, temp->provincia);
+        strcpy(nuevo->sector, temp->sector);
+        strcpy(nuevo->trayectoria.provincia, temp->trayectoria.provincia);
+        strcpy(nuevo->trayectoria.sector, temp->trayectoria.sector);
+        nuevo->id = temp->id;
+
+        for (int i = 0; i < 6; i++) {
+          nuevo->trayectoria.nopromovidos[i] =
+              temp->trayectoria.nopromovidos[i];
+          nuevo->trayectoria.promovidos[i] = temp->trayectoria.promovidos[i];
+        }
+        nuevo->trayectoria.secundariaEgresados =
+            temp->trayectoria.secundariaEgresados;
+        // Agregando a la lista nueva
+        if (*NuevoRegistro == NULL) {
+          *NuevoRegistro = nuevo;
+          nuevo->ant = NULL;
+        } else {
+          NodoTrayectoria *aux2 = *NuevoRegistro;
+          while (aux2->sig != NULL) {
+            aux2 = aux2->sig;
+          }
+          nuevo->ant = aux2;
+          aux2->sig = nuevo;
+          nuevo->sig = NULL;
+        }
+      } else {
+        printf("\nNo se ha podido crear el nodo\n");
+      }
     }
-  }else{
-    printf("\nNo se ha podido crear el nodo\n");
+    temp = temp->sig;
   }
-  }
-  temp = temp->sig;
-}
 }
 
 void ImprimirLista(NodoTrayectoria *registro) {
   NodoTrayectoria *aux = registro;
-  printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
-         "%-6s | %-6s | %-6s | %-6s | %-6s | %-9s | %s\n",
+  printf("%-25s | %-10s | %-7s | %-7s | %-7s | %-7s | %-7s | %-7s | %-7s | "
+         "%-7s | %-7s | %-7s | %-7s | %-7s | %-9s | %s\n",
          "Provincia", "Sector", "1_P", "2_P", "3_P", "4_P", "5_P", "6_P",
          "1_NP", "2_NP", "3_NP", "4_NP", "5_NP", "6_NP", "Egresados", "Anio");
   while (aux != NULL) {
     printf("%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
            "%-6d | %-6d | %-6d | %-6d | %-6d | %-9d | %d\n",
-           aux->provincia, aux->sector,
-           aux->trayectoria.promovidos[0], aux->trayectoria.promovidos[1],
-           aux->trayectoria.promovidos[2], aux->trayectoria.promovidos[3],
-           aux->trayectoria.promovidos[4], aux->trayectoria.promovidos[5],
-           aux->trayectoria.nopromovidos[0], aux->trayectoria.nopromovidos[1],
-           aux->trayectoria.nopromovidos[2], aux->trayectoria.nopromovidos[3],
-           aux->trayectoria.nopromovidos[4], aux->trayectoria.nopromovidos[5],
+           aux->provincia, aux->sector, aux->trayectoria.promovidos[0],
+           aux->trayectoria.promovidos[1], aux->trayectoria.promovidos[2],
+           aux->trayectoria.promovidos[3], aux->trayectoria.promovidos[4],
+           aux->trayectoria.promovidos[5], aux->trayectoria.nopromovidos[0],
+           aux->trayectoria.nopromovidos[1], aux->trayectoria.nopromovidos[2],
+           aux->trayectoria.nopromovidos[3], aux->trayectoria.nopromovidos[4],
+           aux->trayectoria.nopromovidos[5],
            aux->trayectoria.secundariaEgresados, aux->id);
     aux = aux->sig;
   }
@@ -262,8 +270,8 @@ void ImprimirLista(NodoTrayectoria *registro) {
   }
 
   fprintf(archivo,
-          "%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
-          "%-6s | %-6s | %-6s | %-6s | %-6s | %-9s | %s\n",
+          "%-25s | %-10s | %-7s | %-7s | %-7s | %-7s | %-7s | %-7s | %-7s | "
+          "%-7s | %-7s | %-7s | %-7s | %-7s | %-9s | %s\n",
           "Provincia", "Sector", "1_P", "2_P", "3_P", "4_P", "5_P", "6_P",
           "1_NP", "2_NP", "3_NP", "4_NP", "5_NP", "6_NP", "Egresados", "Anio");
 
@@ -271,13 +279,13 @@ void ImprimirLista(NodoTrayectoria *registro) {
     fprintf(archivo,
             "%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
             "%-6d | %-6d | %-6d | %-6d | %-6d | %-9d | %d\n",
-            aux->provincia, aux->sector,
-            aux->trayectoria.promovidos[0], aux->trayectoria.promovidos[1],
-            aux->trayectoria.promovidos[2], aux->trayectoria.promovidos[3],
-            aux->trayectoria.promovidos[4], aux->trayectoria.promovidos[5],
-            aux->trayectoria.nopromovidos[0], aux->trayectoria.nopromovidos[1],
-            aux->trayectoria.nopromovidos[2], aux->trayectoria.nopromovidos[3],
-            aux->trayectoria.nopromovidos[4], aux->trayectoria.nopromovidos[5],
+            aux->provincia, aux->sector, aux->trayectoria.promovidos[0],
+            aux->trayectoria.promovidos[1], aux->trayectoria.promovidos[2],
+            aux->trayectoria.promovidos[3], aux->trayectoria.promovidos[4],
+            aux->trayectoria.promovidos[5], aux->trayectoria.nopromovidos[0],
+            aux->trayectoria.nopromovidos[1], aux->trayectoria.nopromovidos[2],
+            aux->trayectoria.nopromovidos[3], aux->trayectoria.nopromovidos[4],
+            aux->trayectoria.nopromovidos[5],
             aux->trayectoria.secundariaEgresados, aux->id);
     aux = aux->sig;
   }

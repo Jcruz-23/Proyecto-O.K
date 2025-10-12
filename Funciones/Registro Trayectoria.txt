@@ -1,4 +1,4 @@
-Provincia                 | Sector     | 1_P    | 2_P    | 3_P    | 4_P    | 5_P    | 6_P    | 1_NP   | 2_NP   | 3_NP   | 4_NP   | 5_NP   | 6_NP   | Egresados | Anio
+Provincia                 | Sector     | 1_P     | 2_P     | 3_P     | 4_P     | 5_P     | 6_P     | 1_NP    | 2_NP    | 3_NP    | 4_NP    | 5_NP    | 6_NP    | Egresados | Anio
 Buenos Aires              | Estatal    | 73     | 66     | 67     | 42     | 51     | 0      | 20     | 17     | 13     | 9      | 19     | 0      | 73        | 2019
 
 Buenos Aires             | Estatal    | 99786  | 85779  | 75233  | 64385  | 53415  | 7185   | 48360  | 32494  | 30823  | 18372  | 25086  | 2527   | 76486     | 2019
