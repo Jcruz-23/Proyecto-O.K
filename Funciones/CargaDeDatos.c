@@ -1,4 +1,46 @@
-#include "../Cabeceras/Prototipos.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h> 
+
+typedef struct {
+  int secundariaEgresados; // cantidad de egresos.
+  int promovidos[6];       // aprobados
+  int nopromovidos[6];     // no aprobados
+} Trayectoria;
+
+typedef struct {
+  int matriculas[6]; // matrícula.
+  int repitentes[6]; // cantidad de repitentes.
+} registroMatricula;
+
+typedef struct NodoTrayectoria {
+  Trayectoria trayectoria;
+  char provincia[25]; // provincia del dato
+  char sector[10];    // estatal o privado
+  int id;
+  struct NodoTrayectoria *sig;
+  struct NodoTrayectoria *ant;
+} NodoTrayectoria;
+
+typedef struct Nodo {
+  int id;             // año
+  char provincia[30]; // provincias
+  char tipo[10];      // publico / privado
+  registroMatricula reg;
+  struct Nodo *ant;
+  struct Nodo *sig;
+} Matricula;
+
+void InsertarRegistroMatricula(Matricula **, registroMatricula, int, char[20], char[10]);
+void LecturaMatricula(Matricula **);
+void SubirMatricula(char *, Matricula **, registroMatricula, int, char[20], char[10]);
+void ClasificacionMatricula(Matricula *, Matricula **);
+void InsertarNodoTrayectoria(NodoTrayectoria **);
+int Lectura(Trayectoria *, FILE *, char[25], char[10]);
+void Carga(NodoTrayectoria **, Trayectoria, char[25], char[10]);
+void Clasificacion(NodoTrayectoria *, NodoTrayectoria **);
+void ImprimirLista(NodoTrayectoria *, Matricula *);
+void Liberar(NodoTrayectoria**, NodoTrayectoria**, Matricula**, Matricula**);
 
 int main() {
   NodoTrayectoria *RegistroTrayectoria = NULL;
@@ -51,6 +93,7 @@ void ImprimirListaMatricula(Matricula *m) {
 
 void LecturaMatricula(Matricula **RegistroMatricula) {
   Matricula *temp = NULL;
+  FILE *salida;
   int id = 0;
   char provincia[31];
   char tipo[10];
@@ -61,6 +104,15 @@ void LecturaMatricula(Matricula **RegistroMatricula) {
   SubirMatricula("2020_Matricula.csv", &temp, rM, id, provincia, tipo);
   id = 2021;
   SubirMatricula("2021_Matricula.csv", &temp, rM, id, provincia, tipo);
+
+  Matricula *aux = temp;
+
+  salida = fopen("Salida.txt", "w");
+
+  if (salida == NULL) {
+    printf("\nError al abrir salida\n");
+    return;
+  }
   ClasificacionMatricula(temp, RegistroMatricula);
 }
 
