@@ -61,6 +61,7 @@ void LecturaMatricula(Matricula **RegistroMatricula) {
   SubirMatricula("2020_Matricula.csv", &temp, rM, id, provincia, tipo);
   id = 2021;
   SubirMatricula("2021_Matricula.csv", &temp, rM, id, provincia, tipo);
+  
   ClasificacionMatricula(temp, RegistroMatricula);
 }
 
@@ -76,7 +77,7 @@ void SubirMatricula(char *archivo, Matricula **RegistroMatricula,
     printf("\nError al abrir archivo.csv\n");
   } else {
     fgets(cabecera, sizeof(cabecera), a);
-    while (fscanf(a, "%30[^,],%9[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+    while (fscanf(a, " %30[^,],%9[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
                   provincia, tipo, &rM.repitentes[0], &rM.repitentes[1],
                   &rM.repitentes[2], &rM.repitentes[3], &rM.repitentes[4],
                   &rM.repitentes[5], &rM.matriculas[0], &rM.matriculas[1],
@@ -262,7 +263,7 @@ int Lectura(Trayectoria *trayectoria, FILE *archivo, char provincia[25],
             char sector[10]) {
   int cant = 0;
   cant = (fscanf(
-      archivo, "%25[^,],%10[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+      archivo, " %25[^,],%10[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
       provincia, sector, &trayectoria->promovidos[0],
       &trayectoria->promovidos[1], &trayectoria->promovidos[2],
       &trayectoria->promovidos[3], &trayectoria->promovidos[4],
@@ -414,7 +415,7 @@ void ImprimirLista(NodoTrayectoria *trayectoria, Matricula *matricula) {
         aux2 = aux2->sig;
     }
   fclose(archivo);
-  printf("Datos guardados correctamente\n");
+  printf("\n\n");
 
   aux2 = matricula;
 
