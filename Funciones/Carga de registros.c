@@ -1,46 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-typedef struct {
-  int secundariaEgresados; // cantidad de egresos.
-  int promovidos[6];       // aprobados
-  int nopromovidos[6];     // no aprobados
-} Trayectoria;
-
-typedef struct {
-  int matriculas[6]; // matrícula.
-  int repitentes[6]; // cantidad de repitentes.
-} registroMatricula;
-
-typedef struct NodoTrayectoria {
-  Trayectoria trayectoria;
-  char provincia[25]; // provincia del dato
-  char sector[10];    // estatal o privado
-  int id;
-  struct NodoTrayectoria *sig;
-  struct NodoTrayectoria *ant;
-} NodoTrayectoria;
-
-typedef struct Nodo {
-  int id;             // año
-  char provincia[30]; // provincias
-  char tipo[10];      // publico / privado
-  registroMatricula reg;
-  struct Nodo *ant;
-  struct Nodo *sig;
-} Matricula;
-
-void InsertarRegistroMatricula(Matricula **, registroMatricula, int, char[20], char[10]);
-void LecturaMatricula(Matricula **);
-void SubirMatricula(char *, Matricula **, registroMatricula, int, char[20], char[10]);
-void ClasificacionMatricula(Matricula *, Matricula **);
-void InsertarNodoTrayectoria(NodoTrayectoria **);
-int Lectura(Trayectoria *, FILE *, char[25], char[10]);
-void Carga(NodoTrayectoria **, Trayectoria, char[25], char[10]);
-void Clasificacion(NodoTrayectoria *, NodoTrayectoria **);
-void ImprimirLista(NodoTrayectoria *, Matricula *);
-void Liberar(NodoTrayectoria**, NodoTrayectoria**, Matricula**, Matricula**);
+#include "../Cabeceras/Prototipos.h"
 
 int main() {
   NodoTrayectoria *RegistroTrayectoria = NULL;
@@ -93,7 +51,6 @@ void ImprimirListaMatricula(Matricula *m) {
 
 void LecturaMatricula(Matricula **RegistroMatricula) {
   Matricula *temp = NULL;
-  FILE *salida;
   int id = 0;
   char provincia[31];
   char tipo[10];
@@ -105,14 +62,6 @@ void LecturaMatricula(Matricula **RegistroMatricula) {
   id = 2021;
   SubirMatricula("2021_Matricula.csv", &temp, rM, id, provincia, tipo);
 
-  Matricula *aux = temp;
-
-  salida = fopen("Salida.txt", "w");
-
-  if (salida == NULL) {
-    printf("\nError al abrir salida\n");
-    return;
-  }
   ClasificacionMatricula(temp, RegistroMatricula);
 }
 
@@ -128,7 +77,7 @@ void SubirMatricula(char *archivo, Matricula **RegistroMatricula,
     printf("\nError al abrir archivo.csv\n");
   } else {
     fgets(cabecera, sizeof(cabecera), a);
-    while (fscanf(a, "%30[^,],%9[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+    while (fscanf(a, " %30[^,],%9[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
                   provincia, tipo, &rM.repitentes[0], &rM.repitentes[1],
                   &rM.repitentes[2], &rM.repitentes[3], &rM.repitentes[4],
                   &rM.repitentes[5], &rM.matriculas[0], &rM.matriculas[1],
@@ -314,7 +263,7 @@ int Lectura(Trayectoria *trayectoria, FILE *archivo, char provincia[25],
             char sector[10]) {
   int cant = 0;
   cant = (fscanf(
-      archivo, "%25[^,],%10[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+      archivo, " %25[^,],%10[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
       provincia, sector, &trayectoria->promovidos[0],
       &trayectoria->promovidos[1], &trayectoria->promovidos[2],
       &trayectoria->promovidos[3], &trayectoria->promovidos[4],
@@ -466,7 +415,7 @@ void ImprimirLista(NodoTrayectoria *trayectoria, Matricula *matricula) {
         aux2 = aux2->sig;
     }
   fclose(archivo);
-  printf("Datos guardados correctamente\n");
+  printf("\n\n");
 
   aux2 = matricula;
 
