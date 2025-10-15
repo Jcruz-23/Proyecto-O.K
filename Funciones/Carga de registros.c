@@ -17,7 +17,7 @@ void InsertarRegistroMatricula(Matricula **m, registroMatricula rM, int id,
   nuevo->ant = NULL;
   nuevo->id = id;
   strcpy(nuevo->provincia, provincia);
-  strcpy(nuevo->tipo, tipo);
+  strcpy(nuevo->sector, tipo);
   nuevo->reg = rM;
   if (*m == NULL) {
     *m = nuevo;
@@ -40,7 +40,7 @@ void ImprimirListaMatricula(Matricula *m) {
     printf(
         "%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
         "%-6d | %-6d | %-6d | %-6d | %-6d | %d\n",
-        aux->provincia, aux->tipo, aux->reg.repitentes[0],
+        aux->provincia, aux->sector, aux->reg.repitentes[0],
         aux->reg.repitentes[1], aux->reg.repitentes[2], aux->reg.repitentes[3],
         aux->reg.repitentes[4], aux->reg.repitentes[5], aux->reg.matriculas[0],
         aux->reg.matriculas[1], aux->reg.matriculas[2], aux->reg.matriculas[3],
@@ -99,7 +99,7 @@ void ClasificacionMatricula(Matricula *temp, Matricula **RegistroMatricula) {
 
     while (aux != NULL && bandera == 0) {
       if (strcmp(tempo->provincia, aux->provincia) == 0 &&
-          strcmp(tempo->tipo, aux->tipo) == 0 &&
+          strcmp(tempo->sector, aux->sector) == 0 &&
           tempo->id == aux->id) { // Buscar nodo en la lista nueva primero
         bandera = 1;
       } else {
@@ -119,7 +119,7 @@ void ClasificacionMatricula(Matricula *temp, Matricula **RegistroMatricula) {
         nuevo->ant = NULL;
         nuevo->sig = NULL;
         strcpy(nuevo->provincia, tempo->provincia);
-        strcpy(nuevo->tipo, tempo->tipo);
+        strcpy(nuevo->sector, tempo->sector);
         nuevo->id = tempo->id;
 
         for (int i = 0; i < 6; i++) {
@@ -408,7 +408,7 @@ void ImprimirLista(NodoTrayectoria *trayectoria, Matricula *matricula) {
     while(aux2 != NULL){
             fprintf(archivo,
             "%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %d\n",
-            aux2->provincia, aux2->tipo, aux2->reg.repitentes[0],aux2->reg.repitentes[1],aux2->reg.repitentes[2],
+            aux2->provincia, aux2->sector, aux2->reg.repitentes[0],aux2->reg.repitentes[1],aux2->reg.repitentes[2],
                     aux2->reg.repitentes[3],aux2->reg.repitentes[4],aux2->reg.repitentes[5],
                     aux2->reg.matriculas[0],aux2->reg.matriculas[1],aux2->reg.matriculas[2],
                     aux2->reg.matriculas[3],aux2->reg.matriculas[4],aux2->reg.matriculas[5], aux2->id);
@@ -427,7 +427,7 @@ void ImprimirLista(NodoTrayectoria *trayectoria, Matricula *matricula) {
             printf(
             "%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
             "%-6d | %-6d | %-6d | %-6d | %-6d | %d\n",
-            aux2->provincia, aux2->tipo, aux2->reg.repitentes[0],aux2->reg.repitentes[1],aux2->reg.repitentes[2],
+            aux2->provincia, aux2->sector, aux2->reg.repitentes[0],aux2->reg.repitentes[1],aux2->reg.repitentes[2],
                     aux2->reg.repitentes[3],aux2->reg.repitentes[4],aux2->reg.repitentes[5],
                     aux2->reg.matriculas[0],aux2->reg.matriculas[1],aux2->reg.matriculas[2],
                     aux2->reg.matriculas[3],aux2->reg.matriculas[4],aux2->reg.matriculas[5], aux2->id);

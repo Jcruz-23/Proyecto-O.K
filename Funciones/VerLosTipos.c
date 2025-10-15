@@ -106,7 +106,7 @@ void VerSector(NodoTrayectoria* Tr, Matricula* Mtr){
             }
             auxTr = auxTr->sig;
         }
-
+        printf("\n\n");
         printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
          "%-6s | %-6s | %-6s | %-6s | %-6s | %s\n",
          "Provincia", "Sector", "1_REP", "2_REP", "3_REP", "4_REP", "5_REP",
@@ -146,7 +146,7 @@ void VerSector(NodoTrayectoria* Tr, Matricula* Mtr){
             }
             auxTr = auxTr->sig;
         }
-
+        printf("\n\n");
         printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
          "%-6s | %-6s | %-6s | %-6s | %-6s | %s\n",
          "Provincia", "Sector", "1_REP", "2_REP", "3_REP", "4_REP", "5_REP",
