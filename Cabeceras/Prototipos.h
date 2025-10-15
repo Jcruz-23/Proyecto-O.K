@@ -34,7 +34,7 @@ typedef struct NodoTrayectoria {
 typedef struct Nodo {
   int id;             // año
   char provincia[30]; // provincias
-  char tipo[10];      // publico / privado
+  char sector[10];      // publico / privado
   registroMatricula reg;
   struct Nodo *ant;
   struct Nodo *sig;
@@ -115,7 +115,7 @@ void verTodosLosAnios(Matricula *Matricula, NodoTrayectoria *Trayectoria);
 //.         año de escolaridad = 1 matriculas = 22 repitentes = 3        año de escolaridad = 1 secundariaEgresados = 22 sobreEdad = 5
 //
 
-void verTodosLosTipos(Matricula *Matricula, NodoTrayectoria *Trayectoria);
+void VerSector(NodoTrayectoria*, Matricula*);
 // Esta funcion deberia depender del tipo(estatal/privado) , lo que se deberia lograr es recorrer todos los datos que tenga guardado el nodo por cada tipo , es decir, ej: puclico mostraria todos los registros guardados de matricula y trayectoria de esa tipo ademas deberia mostrarse por consola como 2 tablas para discriminar cuando es matricula y cuando es trayectoria por cada año escolar.
 // una validacion seria ir mostrando mismo año escolar y misma tipo y en caso de que algun nodo no tenga misma info que el otro mostrar en consola , contemplar el caso que alguno de los 2 puede no tener informacion de la tipo analizada o puede tener mas que el otro , en esos casos colocar un cartel que diga "no se encontraron registros" .
 // ********EJEMPLO consola*********
