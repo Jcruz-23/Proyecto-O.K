@@ -14,7 +14,7 @@ void InsertarRegistroMatricula(Matricula **m, registroMatricula rM, int id,
                                char provincia[20], char tipo[10]) {
   Matricula *nuevo = (Matricula *)malloc(sizeof(Matricula));
   nuevo->sig = NULL;
-  nuevo->ant = NULL;
+  
   nuevo->id = id;
   strcpy(nuevo->provincia, provincia);
   strcpy(nuevo->sector, tipo);
@@ -116,7 +116,7 @@ void ClasificacionMatricula(Matricula *temp, Matricula **RegistroMatricula) {
              // nueva
       Matricula *nuevo = (Matricula *)malloc(sizeof(Matricula));
       if (nuevo != NULL) {
-        nuevo->ant = NULL;
+        
         nuevo->sig = NULL;
         strcpy(nuevo->provincia, tempo->provincia);
         strcpy(nuevo->sector, tempo->sector);
@@ -135,7 +135,7 @@ void ClasificacionMatricula(Matricula *temp, Matricula **RegistroMatricula) {
           while (aux2->sig != NULL) {
             aux2 = aux2->sig;
           }
-          nuevo->ant = aux2;
+          
           aux2->sig = nuevo;
         }
       } else {
@@ -176,7 +176,7 @@ void InsertarNodoTrayectoria(NodoTrayectoria **RegistroTrayectoria) {
               while (aux->sig != NULL) {
                 aux = aux->sig;
               }
-              nuevo->ant = aux;
+              
               aux->sig = nuevo;
             }
           } else {
@@ -210,7 +210,7 @@ void InsertarNodoTrayectoria(NodoTrayectoria **RegistroTrayectoria) {
               while (aux->sig != NULL) {
                 aux = aux->sig;
               }
-              nuevo->ant = aux;
+              
               aux->sig = nuevo;
             }
           } else {
@@ -243,7 +243,7 @@ void InsertarNodoTrayectoria(NodoTrayectoria **RegistroTrayectoria) {
               while (aux->sig != NULL) {
                 aux = aux->sig;
               }
-              nuevo->ant = aux;
+              
               aux->sig = nuevo;
             }
           } else {
@@ -277,7 +277,7 @@ int Lectura(Trayectoria *trayectoria, FILE *archivo, char provincia[25],
 void Carga(NodoTrayectoria **nuevo, Trayectoria trayectoria, char provincia[25],
            char sector[10]) {
 
-  (*nuevo)->ant = NULL;
+  
   (*nuevo)->sig = NULL;
   strcpy((*nuevo)->provincia, provincia);
   strcpy((*nuevo)->sector, sector);
@@ -319,7 +319,7 @@ void Clasificacion(NodoTrayectoria *temp,
       NodoTrayectoria *nuevo =
           (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
       if (nuevo != NULL) {
-        nuevo->ant = NULL;
+        
         nuevo->sig = NULL;
         strcpy(nuevo->provincia, tempo->provincia);
         strcpy(nuevo->sector, tempo->sector);
@@ -340,7 +340,7 @@ void Clasificacion(NodoTrayectoria *temp,
           while (aux2->sig != NULL) {
             aux2 = aux2->sig;
           }
-          nuevo->ant = aux2;
+          
           aux2->sig = nuevo;
         }
       } else {

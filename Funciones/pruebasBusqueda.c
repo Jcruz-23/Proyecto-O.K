@@ -3,10 +3,11 @@
 int main() {
   NodoTrayectoria *RegistroTrayectoria = NULL;
   Matricula *RegistroMatricula = NULL;
+  Matricula *tempM = NULL;
+  NodoTrayectoria *tempT = NULL;
   InsertarNodoTrayectoria(&RegistroTrayectoria);
   LecturaMatricula(&RegistroMatricula);
   ImprimirLista(RegistroTrayectoria, RegistroMatricula);
-  BuscarPorProvincia(RegistroMatricula, RegistroTrayectoria);
   return 0;
 }
 
@@ -14,7 +15,7 @@ void InsertarRegistroMatricula(Matricula **m, registroMatricula rM, int id,
                                char provincia[20], char tipo[10]) {
   Matricula *nuevo = (Matricula *)malloc(sizeof(Matricula));
   nuevo->sig = NULL;
-  nuevo->ant = NULL;
+  
   nuevo->id = id;
   strcpy(nuevo->provincia, provincia);
   strcpy(nuevo->sector, tipo);
@@ -115,7 +116,7 @@ void ClasificacionMatricula(Matricula *temp, Matricula **RegistroMatricula) {
              // nueva
       Matricula *nuevo = (Matricula *)malloc(sizeof(Matricula));
       if (nuevo != NULL) {
-        nuevo->ant = NULL;
+        
         nuevo->sig = NULL;
         strcpy(nuevo->provincia, tempo->provincia);
         strcpy(nuevo->sector, tempo->sector);
@@ -134,7 +135,7 @@ void ClasificacionMatricula(Matricula *temp, Matricula **RegistroMatricula) {
           while (aux2->sig != NULL) {
             aux2 = aux2->sig;
           }
-          nuevo->ant = aux2;
+          
           aux2->sig = nuevo;
         }
       } else {
@@ -175,7 +176,7 @@ void InsertarNodoTrayectoria(NodoTrayectoria **RegistroTrayectoria) {
               while (aux->sig != NULL) {
                 aux = aux->sig;
               }
-              nuevo->ant = aux;
+              
               aux->sig = nuevo;
             }
           } else {
@@ -209,7 +210,7 @@ void InsertarNodoTrayectoria(NodoTrayectoria **RegistroTrayectoria) {
               while (aux->sig != NULL) {
                 aux = aux->sig;
               }
-              nuevo->ant = aux;
+              
               aux->sig = nuevo;
             }
           } else {
@@ -242,7 +243,7 @@ void InsertarNodoTrayectoria(NodoTrayectoria **RegistroTrayectoria) {
               while (aux->sig != NULL) {
                 aux = aux->sig;
               }
-              nuevo->ant = aux;
+              
               aux->sig = nuevo;
             }
           } else {
@@ -276,7 +277,7 @@ int Lectura(Trayectoria *trayectoria, FILE *archivo, char provincia[25],
 void Carga(NodoTrayectoria **nuevo, Trayectoria trayectoria, char provincia[25],
            char sector[10]) {
 
-  (*nuevo)->ant = NULL;
+  
   (*nuevo)->sig = NULL;
   strcpy((*nuevo)->provincia, provincia);
   strcpy((*nuevo)->sector, sector);
@@ -318,7 +319,7 @@ void Clasificacion(NodoTrayectoria *temp,
       NodoTrayectoria *nuevo =
           (NodoTrayectoria *)malloc(sizeof(NodoTrayectoria));
       if (nuevo != NULL) {
-        nuevo->ant = NULL;
+        
         nuevo->sig = NULL;
         strcpy(nuevo->provincia, tempo->provincia);
         strcpy(nuevo->sector, tempo->sector);
@@ -339,7 +340,7 @@ void Clasificacion(NodoTrayectoria *temp,
           while (aux2->sig != NULL) {
             aux2 = aux2->sig;
           }
-          nuevo->ant = aux2;
+          
           aux2->sig = nuevo;
         }
       } else {
@@ -441,13 +442,16 @@ void ImprimirLista(NodoTrayectoria *trayectoria, Matricula *matricula) {
   }
 }
 
-void BuscarPorProvincia(Matricula *RegistroMatricula,
-                        NodoTrayectoria *RegistroTrayectoria) {
-  NodoTrayectoria *aux = RegistroTrayectoria;
-  Matricula *aux2 = RegistroMatricula;
+void BuscarPorProvincia(Matricula *RegistroMatricula, NodoTrayectoria *RegistroTrayectoria, Matricula *tempM, NodoTrayectoria *tempT) {
+ 
   char provincia[25];
+  char opcion = ' ';
   int bandera = 0;
-  printf("\nIngrese el nombre de la provincia que desee buscar: ");
+
+  if(tempM != NULL && tempT != NULL){
+  NodoTrayectoria *aux = tempT;
+  Matricula *aux2 = tempM;
+    printf("\nIngrese el nombre de la provincia que desee buscar: ");
   scanf(" %24[^\n]", provincia);
 
   printf("\nLos datos encontrados son:\n");
@@ -469,6 +473,29 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
              aux->trayectoria.nopromovidos[3], aux->trayectoria.nopromovidos[4],
              aux->trayectoria.nopromovidos[5],
              aux->trayectoria.secundariaEgresados, aux->id);
+             NodoTrayectoria *nuevo = (NodoTrayectoria *) malloc(sizeof(NodoTrayectoria));
+             if(nuevo != NULL){
+               nuevo->sig = NULL;
+               strcpy(nuevo->provincia, aux->provincia);
+               strcpy(nuevo->sector, aux->sector);
+               nuevo->id = aux->id;
+               for(int i = 0; i < 6; i++){
+               nuevo->trayectoria.nopromovidos[i] = aux->trayectoria.nopromovidos[i];
+               nuevo->trayectoria.promovidos[i] = aux->trayectoria.promovidos[i];
+               }
+               nuevo->trayectoria.secundariaEgresados = aux->trayectoria.secundariaEgresados;
+               if(tempT == NULL){
+                tempT = nuevo;
+              }else{
+                NodoTrayectoria *auxtemp = tempT;
+                while(auxtemp->sig != NULL){
+                  auxtemp = auxtemp->sig;
+                }
+                auxtemp->sig = nuevo;
+              }
+             }else{
+              printf("\nError al crear lista auxiliar\n");
+             }
     }
     aux = aux->sig;
   }
@@ -493,6 +520,28 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
              aux2->reg.matriculas[1], aux2->reg.matriculas[2],
              aux2->reg.matriculas[3], aux2->reg.matriculas[4],
              aux2->reg.matriculas[5], aux2->id);
+             Matricula *nuevo2 = (Matricula *) malloc(sizeof(Matricula));
+             if(nuevo2 != NULL){
+               nuevo2->sig = NULL;
+               strcpy(nuevo2->provincia, aux2->provincia);
+               strcpy(nuevo2->sector, aux2->sector);
+               nuevo2->id = aux2->id;
+               for(int i = 0; i < 6; i++){
+               nuevo2->reg.matriculas[i] = aux2->reg.matriculas[i];
+               nuevo2->reg.repitentes[i] = aux2->reg.repitentes[i];
+               }
+               if(tempM == NULL){
+                tempM = nuevo2;
+              }else{
+                Matricula *aux2temp = tempM;
+                while(aux2temp->sig != NULL){
+                  aux2temp = aux2temp->sig;
+                }
+                aux2temp->sig = nuevo2;
+              }
+             }else{
+              printf("\nError al crear lista auxiliar\n");
+             }
     }
     aux2 = aux2->sig;
   }
@@ -500,4 +549,125 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
     printf("\nNo se han encontrado datos de la provincia ingresada\n");
   }
   bandera = 0;
+  }else{
+  NodoTrayectoria *aux = RegistroTrayectoria;
+  Matricula *aux2 = RegistroMatricula;
+  printf("\nIngrese el nombre de la provincia que desee buscar: ");
+  scanf(" %24[^\n]", provincia);
+
+  printf("\nLos datos encontrados son:\n");
+  printf("\n\n");
+  printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
+         "%-6s | %-6s | %-6s | %-6s | %-6s | %-9s | %s\n",
+         "Provincia", "Sector", "1_P", "2_P", "3_P", "4_P", "5_P", "6_P",
+         "1_NP", "2_NP", "3_NP", "4_NP", "5_NP", "6_NP", "Egresados", "Anio");
+  while (aux != NULL) {
+    if (strcasecmp(aux->provincia, provincia) == 0) {
+      bandera = 1;
+      printf("%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
+             "%-6d | %-6d | %-6d | %-6d | %-6d | %-9d | %d\n",
+             aux->provincia, aux->sector, aux->trayectoria.promovidos[0],
+             aux->trayectoria.promovidos[1], aux->trayectoria.promovidos[2],
+             aux->trayectoria.promovidos[3], aux->trayectoria.promovidos[4],
+             aux->trayectoria.promovidos[5], aux->trayectoria.nopromovidos[0],
+             aux->trayectoria.nopromovidos[1], aux->trayectoria.nopromovidos[2],
+             aux->trayectoria.nopromovidos[3], aux->trayectoria.nopromovidos[4],
+             aux->trayectoria.nopromovidos[5],
+             aux->trayectoria.secundariaEgresados, aux->id);
+             NodoTrayectoria *nuevo = (NodoTrayectoria *) malloc(sizeof(NodoTrayectoria));
+             if(nuevo != NULL){
+               nuevo->sig = NULL;
+               strcpy(nuevo->provincia, aux->provincia);
+               strcpy(nuevo->sector, aux->sector);
+               nuevo->id = aux->id;
+               for(int i = 0; i < 6; i++){
+               nuevo->trayectoria.nopromovidos[i] = aux->trayectoria.nopromovidos[i];
+               nuevo->trayectoria.promovidos[i] = aux->trayectoria.promovidos[i];
+               }
+               nuevo->trayectoria.secundariaEgresados = aux->trayectoria.secundariaEgresados;
+               if(tempT == NULL){
+                tempT = nuevo;
+              }else{
+                NodoTrayectoria *auxtemp = tempT;
+                while(auxtemp->sig != NULL){
+                  auxtemp = auxtemp->sig;
+                }
+                auxtemp->sig = nuevo;
+              }
+             }else{
+              printf("\nError al crear lista auxiliar\n");
+             }
+    }
+    aux = aux->sig;
+  }
+  if (bandera == 0) {
+    printf("\nNo se ha encontrado trayectoria en la provincia ingresada\n");
+  }
+  bandera = 0;
+  printf("\n\n");
+  printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
+         "%-6s | %-6s | %-6s | %-6s | %-6s | %s\n",
+         "Provincia", "Sector", "1_REP", "2_REP", "3_REP", "4_REP", "5_REP",
+         "6_REP", "1_MTR", "2_MTR", "3_MTR", "4_MTR", "5_MTR", "6_MTR", "Anio");
+  while (aux2 != NULL) {
+    if (strcasecmp(aux2->provincia, provincia) == 0) {
+      bandera = 1;
+      printf("%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
+             "%-6d | %-6d | %-6d | %-6d | %-6d | %d\n",
+             aux2->provincia, aux2->sector, aux2->reg.repitentes[0],
+             aux2->reg.repitentes[1], aux2->reg.repitentes[2],
+             aux2->reg.repitentes[3], aux2->reg.repitentes[4],
+             aux2->reg.repitentes[5], aux2->reg.matriculas[0],
+             aux2->reg.matriculas[1], aux2->reg.matriculas[2],
+             aux2->reg.matriculas[3], aux2->reg.matriculas[4],
+             aux2->reg.matriculas[5], aux2->id);
+             Matricula *nuevo2 = (Matricula *) malloc(sizeof(Matricula));
+             if(nuevo2 != NULL){
+               nuevo2->sig = NULL;
+               strcpy(nuevo2->provincia, aux2->provincia);
+               strcpy(nuevo2->sector, aux2->sector);
+               nuevo2->id = aux2->id;
+               for(int i = 0; i < 6; i++){
+               nuevo2->reg.matriculas[i] = aux2->reg.matriculas[i];
+               nuevo2->reg.repitentes[i] = aux2->reg.repitentes[i];
+               }
+               if(tempM == NULL){
+                tempM = nuevo2;
+              }else{
+                Matricula *aux2temp = tempM;
+                while(aux2temp->sig != NULL){
+                  aux2temp = aux2temp->sig;
+                }
+                aux2temp->sig = nuevo2;
+              }
+             }else{
+              printf("\nError al crear lista auxiliar\n");
+             }
+    }
+    aux2 = aux2->sig;
+  }
+  if (bandera == 0) {
+    printf("\nNo se han encontrado datos de la provincia ingresada\n");
+  }
+  bandera = 0;
+
+  printf("\nDesea agregar otro filtro\?: Si(s), No(n)\n");
+  scanf(" %c", &opcion);
+
+  if(opcion == 's' || opcion == 'S'){
+    opcion = ' ';
+    printf("\nLos filtros que puede agregar son:\n");
+    printf("a) Buscar por año\n");
+    printf("b) Buscar por sector\n");
+    scanf(" %c", &opcion);
+
+    switch(opcion){
+      case 'a': BuscarPorAnio(RegistroMatricula, RegistroTrayectoria, tempM, tempT);
+      break;
+      case 'b': BuscarPorTipo(RegistroMatricula, RegistroTrayectoria, tempM, tempT);
+      break;
+      default: printf("\nNo ha ingresado una opcion valida\n");
+    }
+  }
+}
 }
