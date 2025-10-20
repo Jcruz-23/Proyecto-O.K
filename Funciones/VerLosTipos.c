@@ -1,4 +1,37 @@
-#include "../Cabeceras/Prototipos.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct {
+  int secundariaEgresados; // cantidad de egresos.
+  int promovidos[6];       // aprobados
+  int nopromovidos[6];     // no aprobados
+} Trayectoria;
+
+typedef struct {
+  int matriculas[6]; // matrícula.
+  int repitentes[6]; // cantidad de repitentes.
+} registroMatricula;
+
+typedef struct NodoTrayectoria {
+  Trayectoria trayectoria;
+  char provincia[25]; // provincia del dato
+  char sector[10];    // estatal o privado
+  int id;
+  struct NodoTrayectoria *sig;
+  struct NodoTrayectoria *ant;
+} NodoTrayectoria;
+
+typedef struct Nodo {
+  int id;             // año
+  char provincia[30]; // provincias
+  char sector[10];      // publico / privado
+  registroMatricula reg;
+  struct Nodo *ant;
+  struct Nodo *sig;
+} Matricula;
+
+void VerSector(NodoTrayectoria*, Matricula*);
 
 int main(){
        // --- Lista Trayectoria ---
@@ -76,17 +109,9 @@ int main(){
 void VerSector(NodoTrayectoria* Tr, Matricula* Mtr){
     NodoTrayectoria* auxTr = Tr;
     Matricula* auxMtr = Mtr;
-    char op = ' ';
 
-    printf( "Que sector desea ver?\n"
-            "a)Estatal\n"
-            "b)Privado\n"
-            "opcion: ");scanf(" %c", &op);
-    
-    switch(op){
-        case 'A':
-        case 'a': 
-        printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
+    printf("TRAYECTORIA ESTATAL: \n");
+    printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
          "%-6s | %-6s | %-6s | %-6s | %-6s | %-9s | %s\n",
          "Provincia", "Sector", "1_P", "2_P", "3_P", "4_P", "5_P", "6_P",
          "1_NP", "2_NP", "3_NP", "4_NP", "5_NP", "6_NP", "Egresados", "Anio");
@@ -106,7 +131,11 @@ void VerSector(NodoTrayectoria* Tr, Matricula* Mtr){
             }
             auxTr = auxTr->sig;
         }
+
+
         printf("\n\n");
+        printf("MATRICULA ESTATAL: \n");
+
         printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
          "%-6s | %-6s | %-6s | %-6s | %-6s | %s\n",
          "Provincia", "Sector", "1_REP", "2_REP", "3_REP", "4_REP", "5_REP",
@@ -123,9 +152,16 @@ void VerSector(NodoTrayectoria* Tr, Matricula* Mtr){
             }
             auxMtr = auxMtr->sig;
         }
-        break;
-        case 'B':
-        case 'b':
+
+
+        auxTr = Tr;
+        auxMtr = Mtr;
+
+        printf("\n\n");
+        
+
+        printf("TRAYECTORIA PRIVADO: \n");
+
         printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
          "%-6s | %-6s | %-6s | %-6s | %-6s | %-9s | %s\n",
          "Provincia", "Sector", "1_P", "2_P", "3_P", "4_P", "5_P", "6_P",
@@ -146,7 +182,10 @@ void VerSector(NodoTrayectoria* Tr, Matricula* Mtr){
             }
             auxTr = auxTr->sig;
         }
+
         printf("\n\n");
+        
+        printf("MATRICULA PRIVADO: \n");
         printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
          "%-6s | %-6s | %-6s | %-6s | %-6s | %s\n",
          "Provincia", "Sector", "1_REP", "2_REP", "3_REP", "4_REP", "5_REP",
@@ -162,9 +201,5 @@ void VerSector(NodoTrayectoria* Tr, Matricula* Mtr){
                         auxMtr->reg.matriculas[4], auxMtr->reg.matriculas[5], auxMtr->id);            
             }
             auxMtr = auxMtr->sig;
-            
-        break;
-        default: break;
-        }
     }
 }
