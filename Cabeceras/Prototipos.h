@@ -125,8 +125,8 @@ void VerSector(NodoTrayectoria *, Matricula *);
 // la idea de poder combinar los filtros es que al tener 3 funciones de busqueda se deberia permitir al usuario combinar mas de una busqueda si asi lo desea, un ejemplo de uso seria , buscar por provincia , utilizar  nodos temporales(para matricula y trayectoria) para guardar el tipo de provincia que escribio el usuario , preguntar si desea filtrar por año o tipo , en caso de elegir alguna de estas opciones se deberia llamar a la funcion respectiva y pasar como parametro los nodos temporales ya que van a tener la informacion ya filtrada por provincia , filtrar de nuevo esa informacion por el caso que se solicita y mostrar o permitir combinar una vez mas , en caso de que no quiera realizar ninguna combinacion solo se muestra.
 //*****************************************************************************************/
 
-void BuscarPorProvincia(Matricula *RegistroMatricula, NodoTrayectoria *RegistroTrayectoria,
-                        Matricula **tempM, NodoTrayectoria **tempT);
+void BuscarPorProvincia(Matricula *, NodoTrayectoria *,
+                        Matricula **, NodoTrayectoria **, int *);
 // En esta funcion se tiene que pedir que se ingrese el nombre de la provincia cuyos datos se quiere ver, antes de empezar a mostrarlos, preguntar si se quiere añadir algun otro filtro. Por ej: Cordoba , una vez que ya filtramos los datos segun lo que se nos pide, mostramos la info por consola en un formato de tabla similar al de la funcion mostrarNodo.
 // Hacemos dos nodos temporales, uno para Matricula, y otro para Trayectoria, guardando los datos filtrados en caso de que se pida combinar con otro filtro, asi podemos pasarlos como parametros al llamar a otra funcion para hacer el siguiente filtro
 //                      Matricula                                       Trayectoria
@@ -138,8 +138,8 @@ void BuscarPorProvincia(Matricula *RegistroMatricula, NodoTrayectoria *RegistroT
 //                       Matricula                                     Cant. de egresos
 //                       Repitentes                                       Sobre Edad
 
-void BuscarPorAnio(Matricula *RegistroMatricula, NodoTrayectoria *RegistroTrayectoria,
-                   Matricula **tempM, NodoTrayectoria **tempT);
+void BuscarPorAnio(Matricula *, NodoTrayectoria *,
+                   Matricula **, NodoTrayectoria **, int *);
 // En esta funcion se tiene que pedir que se ingrese el año cuyos datos se quiere ver, antes de empezar a mostrarlos, preguntar si se quiere añadir algun otro filtro. Por ej: 2020 , una vez que ya filtramos los datos segun lo que se nos pide, mostramos la info por consola en un formato de tabla similar al de la funcion mostrarNodo.
 // Hacemos dos nodos temporales, uno para Matricula, y otro para Trayectoria, guardando los datos filtrados en caso de que se pida combinar con otro filtro, asi podemos pasarlos como parametros al llamar a otra funcion para hacer el siguiente filtro
 //                      Matricula                                       Trayectoria
@@ -151,8 +151,8 @@ void BuscarPorAnio(Matricula *RegistroMatricula, NodoTrayectoria *RegistroTrayec
 //                       Matricula                                     Cant. de egresos
 //                       Repitentes                                       Sobre Edad
 
-void BuscarPorTipo(Matricula *RegistroMatricula, NodoTrayectoria *RegistroTrayectoria,
-                   Matricula **tempM, NodoTrayectoria **tempT);
+void BuscarPorTipo(Matricula *, NodoTrayectoria *,
+                   Matricula **, NodoTrayectoria **, int *);
 // En esta funcion se tiene que pedir que se ingrese el tipo cuyos datos se quiere ver, antes de empezar a mostrarlos, preguntar si se quiere añadir algun otro filtro. Por ej: publico, una vez que ya filtramos los datos segun lo que se nos pide, mostramos la info por consola en un formato de tabla similar al de la funcion mostrarNodo.
 // Hacemos dos nodos temporales, uno para Matricula, y otro para Trayectoria, guardando los datos filtrados en caso de que se pida combinar con otro filtro, asi podemos pasarlos como parametros al llamar a otra funcion para hacer el siguiente filtro
 //                      Matricula                                       Trayectoria
