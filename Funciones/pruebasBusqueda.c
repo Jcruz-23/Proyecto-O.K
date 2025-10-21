@@ -501,7 +501,7 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
     while (aux != NULL) {
       char aux_provincia_normalizada[25];
 
-      {
+      
         int j = 0;
         for (int i = 0; aux->provincia[i] != '\0' && j < 24; i++) {
           if (aux->provincia[i] != ' ' && aux->provincia[i] != '\t') {
@@ -511,7 +511,7 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
           }
         }
         aux_provincia_normalizada[j] = '\0';
-      }
+      
 
       if (strcmp(aux_provincia_normalizada, provincia_normalizada) == 0) {
         bandera = 1;
@@ -819,7 +819,6 @@ void BuscarPorTipo(Matricula *RegistroMatricula,
     char opcion = ' ';
     int bandera = 0;
 
-    printf("%d\n", *cont);
     NodoTrayectoria *lista_a_filtrar_T =
         (*tempT != NULL) ? *tempT : RegistroTrayectoria;
     Matricula *lista_a_filtrar_M =
@@ -840,7 +839,7 @@ void BuscarPorTipo(Matricula *RegistroMatricula,
     printf("\nIngrese el tipo que desee buscar: ");
     scanf(" %24[^\n]", tipo);
 
-    {
+    
       int j = 0;
       for (int i = 0; tipo[i] != '\0' && j < 10; i++) {
         if (tipo[i] != ' ' && tipo[i] != '\t') {
@@ -849,7 +848,7 @@ void BuscarPorTipo(Matricula *RegistroMatricula,
         }
       }
       tipo_normalizado[j] = '\0';
-    }
+    
 
     printf("\nLos datos encontrados son:\n");
     printf("\n\n");
