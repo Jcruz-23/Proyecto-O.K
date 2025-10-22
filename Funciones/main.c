@@ -9,6 +9,7 @@ int main() {
   return 0;
 }
 
+// inserta un nuevo registro de matrícula en la lista
 void InsertarRegistroMatricula(Matricula **m, registroMatricula rM, int id,
                                char provincia[20], char tipo[10]) {
   Matricula *nuevo = (Matricula *)malloc(sizeof(Matricula));
@@ -17,23 +18,33 @@ void InsertarRegistroMatricula(Matricula **m, registroMatricula rM, int id,
   strcpy(nuevo->provincia, provincia);
   strcpy(nuevo->sector, tipo);
   nuevo->reg = rM;
+
+  // si la lista está vacía el nuevo nodo será el primero
   if (*m == NULL) {
     *m = nuevo;
   } else {
     Matricula *aux = *m;
+
+    // recorre hasta el final de la lista
     while (aux->sig != NULL) {
       aux = aux->sig;
     }
+
+    // conecta el nuevo nodo al final
     aux->sig = nuevo;
   }
 }
 
+// muestra la lista completa de matrícula con los valores cargados
 void ImprimirListaMatricula(Matricula *m) {
   Matricula *aux = m;
+
   printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
          "%-6s | %-6s | %-6s | %-6s | %-6s | %s\n",
          "Provincia", "Sector", "1_REP", "2_REP", "3_REP", "4_REP", "5_REP",
          "6_REP", "1_MTR", "2_MTR", "3_MTR", "4_MTR", "5_MTR", "6_MTR", "Anio");
+
+  // recorre toda la lista mostrando cada registro
   while (aux != NULL) {
     printf(
         "%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
@@ -47,12 +58,14 @@ void ImprimirListaMatricula(Matricula *m) {
   }
 }
 
+// carga los datos de matrícula de varios años y forma la lista completa
 void LecturaMatricula(Matricula **RegistroMatricula) {
   Matricula *temp = NULL;
   int id = 0;
   char provincia[31];
   char tipo[10];
   registroMatricula rM;
+
   id = 2019;
   SubirMatricula("2019_Matricula.csv", &temp, rM, id, provincia, tipo);
   id = 2020;
@@ -63,7 +76,7 @@ void LecturaMatricula(Matricula **RegistroMatricula) {
   ClasificacionMatricula(temp, RegistroMatricula);
 }
 
-
+// lee los archivos csv de matrícula y los agrega a la lista
 void SubirMatricula(char *archivo, Matricula **RegistroMatricula,
                     registroMatricula rM, int id, char provincia[20],
                     char tipo[10]) {
@@ -75,12 +88,15 @@ void SubirMatricula(char *archivo, Matricula **RegistroMatricula,
     printf("\nError al abrir archivo.csv\n");
   } else {
     fgets(cabecera, sizeof(cabecera), a);
+
+    // lee cada línea del archivo y crea un nuevo registro
     while (fscanf(a, " %30[^,],%9[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
                   provincia, tipo, &rM.repitentes[0], &rM.repitentes[1],
                   &rM.repitentes[2], &rM.repitentes[3], &rM.repitentes[4],
                   &rM.repitentes[5], &rM.matriculas[0], &rM.matriculas[1],
                   &rM.matriculas[2], &rM.matriculas[3], &rM.matriculas[4],
                   &rM.matriculas[5]) == 14) {
+
       InsertarRegistroMatricula(RegistroMatricula, rM, id, provincia, tipo);
     }
     fclose(a);
