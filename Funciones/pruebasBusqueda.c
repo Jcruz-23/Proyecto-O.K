@@ -484,7 +484,7 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
       int j = 0;
       for (int i = 0; provincia[i] != '\0' && j < 24; i++) {
         if (provincia[i] != ' ' && provincia[i] != '\t') {
-          provincia_normalizada[j] = tolower((unsigned char)provincia[i]);
+          provincia_normalizada[j] = tolower((unsigned char)provincia[i]);    //Deberia permitirnos escribir el nombre de la provincia sin mayus ni tilde y encontrarlo igual (no lo hace con el tilde)
           j++;
         }
       }
@@ -508,14 +508,14 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
         for (int i = 0; aux->provincia[i] != '\0' && j < 24; i++) {
           if (aux->provincia[i] != ' ' && aux->provincia[i] != '\t') {
             aux_provincia_normalizada[j] =
-                tolower((unsigned char)aux->provincia[i]);
+                tolower((unsigned char)aux->provincia[i]);    //Deberia permitirnos escribir el nombre de la provincia sin mayus ni tilde y encontrarlo igual (no lo hace con el tilde)
             j++;
           }
         }
         aux_provincia_normalizada[j] = '\0';
       
 
-      if (strcmp(aux_provincia_normalizada, provincia_normalizada) == 0) {
+      if (strcmp(aux_provincia_normalizada, provincia_normalizada) == 0) {    //Compara si la provincia ingresada es igual a la provincia de algun nodo, si lo es agrega el nodo completo a la nueva lista filtrada
         bandera = 1;
         printf(
             "%-15s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
@@ -560,7 +560,7 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
     *tempT = nuevo_tempT;
 
     if (bandera == 0) {
-      printf("\nNo se ha encontrado trayectoria en la provincia ingresada\n");
+      printf("\nNo se ha encontrado trayectoria en la provincia ingresada\n");    //Si no se encontraron coincidencias
     }
     bandera = 0;
     printf("\n\n");
@@ -573,7 +573,7 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
     Matricula *aux2 = lista_a_filtrar_M;
 
     while (aux2 != NULL) {
-      char aux2_provincia_normalizada[25];
+      char aux2_provincia_normalizada[25];    //Hace la misma comparacion con la trayectoria
       {
         int j = 0;
         for (int i = 0; aux2->provincia[i] != '\0' && j < 24; i++) {
@@ -630,7 +630,7 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
     }
     bandera = 0;
 
-    if ((*cont) < 3) {
+    if ((*cont) < 3) {    //Si el contador aun es menor a 3 consulta si la persona quiere agregar un filtro mas
       printf("\nDesea agregar otro filtro\?: Si(s), No(n)\n");
       scanf(" %c", &opcion);
 
