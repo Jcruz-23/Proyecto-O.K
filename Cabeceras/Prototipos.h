@@ -20,7 +20,7 @@ typedef struct
 
 typedef struct
 {
-    int NodoMatriculas[6]; // matrícula.
+    int matricula[6]; // matrícula.
     int repitentes[6]; // cantidad de repitentes.
 } Matricula;
 
@@ -61,16 +61,15 @@ typedef struct Nodo
 // prototipo de funciones
 
 void InsertarMatricula(NodoMatricula **, Matricula, int, char[20], char[10]);
-void LecturaNodoMatricula(NodoMatricula **);
-void SubirNodoMatricula(char *, NodoMatricula **, Matricula, int, char[20], char[10]);
-void ClasificacionNodoMatricula(NodoMatricula *, NodoMatricula **);
 void InsertarNodoTrayectoria(NodoTrayectoria **);
+void LecturaNodoMatricula(NodoMatricula **);
 int Lectura(Trayectoria *, FILE *, char[25], char[10]);
+void SubirNodoMatricula(char *, NodoMatricula **, Matricula, int, char[20], char[10]);
 void Carga(NodoTrayectoria **, Trayectoria, char[25], char[10]);
+void ClasificacionNodoMatricula(NodoMatricula *, NodoMatricula **);
 void Clasificacion(NodoTrayectoria *, NodoTrayectoria **);
 void ImprimirLista(NodoTrayectoria *, NodoMatricula *);
-//void Liberar(NodoTrayectoria **, NodoTrayectoria **, NodoMatricula **, NodoMatricula **);
-void Liberar(NodoTrayectoria **);
+void Liberar(NodoMatricula **, NodoTrayectoria **);
 void Menu(NodoMatricula *, NodoTrayectoria *);
 // Esta funcion tiene que mostrar por consola una lista de opciones a, b, c, etc. Con el siguiente formato:
 // ------- MENU -------
@@ -84,17 +83,6 @@ void Menu(NodoMatricula *, NodoTrayectoria *);
 // s. Salir
 // Tener en cuenta que al mostrar las ultimas tres opciones, hay que ofrecer si se quiere combinar el filtro que se elija con algun otro.
 
-void MostrarNodo(NodoMatricula *, NodoTrayectoria *);
-// En esta funcion se tiene que mostrar por consola en formato de tabla el conjunto de nodos con sus datos, haciendo una columna para NodoMatricula y otra columna para trayectoria. Ej:
-//                      NodoMatricula                                       Trayectoria
-//                    Registro Num.1                                   Registro Num.1
-//                        Año                                               Año
-//                      Provincia                                        Provincia
-//                        Tipo                                              Tipo
-//                   Año de escolaridad                              Año de escolaridad
-//                       NodoMatricula                                     Cant. de egresos
-//                       Repitentes                                       Sobre Edad
-
 void VerTodasLasProvincias(NodoMatricula *, NodoTrayectoria *);
 // Esta funcion deberia depender de la provincia , lo que se deberia lograr es recorrer todos los datos que tenga guardado el nodo por cada provincia , es decir, ej: cordoba mostraria todos los registros guardados de NodoMatricula y trayectoria de esa provincia ademas deberia mostrarse por consola como 2 tablas para discriminar cuando es NodoMatricula y cuando es trayectoria por cada año escolar.
 // una validacion seria ir mostrando mismo año escolar y misma provincia y en caso de que algun nodo no tenga misma info que el otro mostrar en consola , contemplar el caso que alguno de los 2 puede no tener informacion de la provincia analizada o puede tener mas que el otro , en esos casos colocar un cartel que diga "no se encontraron registros" .
@@ -104,14 +92,6 @@ void VerTodasLasProvincias(NodoMatricula *, NodoTrayectoria *);
 //. año de escolaridad = 1 NodoMatriculas = 22 repitentes = 3        año de escolaridad = 1 secundariaEgresados = 22 sobreEdad = 5
 //
 
-void VerTodosLosAnios(NodoMatricula *, NodoTrayectoria *);
-// Esta funcion deberia depender del año, lo que se deberia lograr es recorrer todos los datos que tenga guardado el nodo por cada año , es decir, ej: 2020 mostraria todos los registros guardados de NodoMatricula y trayectoria de esa año ademas deberia mostrarse por consola como 2 tablas para discriminar cuando es NodoMatricula y cuando es trayectoria por cada año escolar.
-// una validacion seria ir mostrando mismo año escolar y misma año y en caso de que algun nodo no tenga misma info que el otro mostrar en consola , contemplar el caso que alguno de los 2 puede no tener informacion de la año analizada o puede tener mas que el otro , en esos casos colocar un cartel que diga "no se encontraron registros" .
-// ********EJEMPLO consola*********
-//                  NodoMatriculas 2020                                              trayectorias 2020
-//.           Registro NodoMatricula numero 1                                         Registro trayectoria numero 1
-//.         año de escolaridad = 1 NodoMatriculas = 22 repitentes = 3        año de escolaridad = 1 secundariaEgresados = 22 sobreEdad = 5
-//
 
 void VerSector(NodoTrayectoria *, NodoMatricula *);
 // Esta funcion deberia depender del tipo(estatal/privado) , lo que se deberia lograr es recorrer todos los datos que tenga guardado el nodo por cada tipo , es decir, ej: puclico mostraria todos los registros guardados de NodoMatricula y trayectoria de esa tipo ademas deberia mostrarse por consola como 2 tablas para discriminar cuando es NodoMatricula y cuando es trayectoria por cada año escolar.
@@ -163,8 +143,5 @@ void BuscarPorTipo(NodoMatricula *, NodoTrayectoria *,
 //                   Año de escolaridad                              Año de escolaridad
 //                       NodoMatricula                                     Cant. de egresos
 //                       Repitentes                                       Sobre Edad
-
-void LiberarMemoria(NodoMatricula *, NodoTrayectoria *);
-// esta funcion debera recorrer al nodo con la condicion que mientras encuentre otro nodo no frena el bucle, luego por cada bucle libera memoria asegurandose de que esten todos los nodos liberados(se utiliza un puntero nodo temporal)
 
 #endif

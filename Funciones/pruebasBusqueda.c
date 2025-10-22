@@ -2,27 +2,27 @@
 
 int main() {
   NodoTrayectoria *RegistroTrayectoria = NULL;
-  Matricula *RegistroMatricula = NULL;
-  Matricula *tempM = NULL;
+  NodoMatricula *Matricula = NULL;
+  NodoMatricula *tempM = NULL;
   NodoTrayectoria *tempT = NULL;
   int cont = 0;
   InsertarNodoTrayectoria(&RegistroTrayectoria);
-  LecturaMatricula(&RegistroMatricula);
-  ImprimirLista(RegistroTrayectoria, RegistroMatricula);
+  LecturaNodoMatricula(&Matricula);
+  ImprimirLista(RegistroTrayectoria, Matricula);
   printf("\n--- Filtro 1: Buscar por provincia ---\n");
-  BuscarPorProvincia(RegistroMatricula, RegistroTrayectoria, &tempM, &tempT,
+  BuscarPorProvincia(Matricula, RegistroTrayectoria, &tempM, &tempT,
                      &cont);
   printf("\n--- Filtro 2: Buscar por tipo ---\n");
-  BuscarPorTipo(RegistroMatricula, RegistroTrayectoria, &tempM, &tempT, &cont);
+  BuscarPorTipo(Matricula, RegistroTrayectoria, &tempM, &tempT, &cont);
   printf("\n--- Filtro 3: Buscar por año ---\n");
-  BuscarPorAnio(RegistroMatricula, RegistroTrayectoria, &tempM, &tempT, &cont);
+  BuscarPorAnio(Matricula, RegistroTrayectoria, &tempM, &tempT, &cont);
 
   return 0;
 }
 
-void InsertarRegistroMatricula(Matricula **m, registroMatricula rM, int id,
+void InsertarMatricula(NodoMatricula **m, Matricula rM, int id,
                                char provincia[20], char tipo[10]) {
-  Matricula *nuevo = (Matricula *)malloc(sizeof(Matricula));
+  NodoMatricula *nuevo = (NodoMatricula *)malloc(sizeof(NodoMatricula));
   nuevo->sig = NULL;
 
   nuevo->id = id;
@@ -32,7 +32,7 @@ void InsertarRegistroMatricula(Matricula **m, registroMatricula rM, int id,
   if (*m == NULL) {
     *m = nuevo;
   } else {
-    Matricula *aux = *m;
+    NodoMatricula *aux = *m;
     while (aux->sig != NULL) {
       aux = aux->sig;
     }
@@ -40,8 +40,8 @@ void InsertarRegistroMatricula(Matricula **m, registroMatricula rM, int id,
   }
 }
 
-void ImprimirListaMatricula(Matricula *m) {
-  Matricula *aux = m;
+void ImprimirListaNodoMatricula(NodoMatricula *m) {
+  NodoMatricula *aux = m;
   printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
          "%-6s | %-6s | %-6s | %-6s | %-6s | %s\n",
          "Provincia", "Sector", "1_REP", "2_REP", "3_REP", "4_REP", "5_REP",
@@ -52,31 +52,31 @@ void ImprimirListaMatricula(Matricula *m) {
         "%-6d | %-6d | %-6d | %-6d | %-6d | %d\n",
         aux->provincia, aux->sector, aux->reg.repitentes[0],
         aux->reg.repitentes[1], aux->reg.repitentes[2], aux->reg.repitentes[3],
-        aux->reg.repitentes[4], aux->reg.repitentes[5], aux->reg.matriculas[0],
-        aux->reg.matriculas[1], aux->reg.matriculas[2], aux->reg.matriculas[3],
-        aux->reg.matriculas[4], aux->reg.matriculas[5], aux->id);
+        aux->reg.repitentes[4], aux->reg.repitentes[5], aux->reg.matricula[0],
+        aux->reg.matricula[1], aux->reg.matricula[2], aux->reg.matricula[3],
+        aux->reg.matricula[4], aux->reg.matricula[5], aux->id);
     aux = aux->sig;
   }
 }
 
-void LecturaMatricula(Matricula **RegistroMatricula) {
-  Matricula *temp = NULL;
+void LecturaNodoMatricula(NodoMatricula **matricula) {
+  NodoMatricula *temp = NULL;
   int id = 0;
   char provincia[31];
   char tipo[10];
-  registroMatricula rM;
+  Matricula rM;
   id = 2019;
-  SubirMatricula("2019_Matricula.csv", &temp, rM, id, provincia, tipo);
+  SubirNodoMatricula("2019_NodoMatricula.csv", &temp, rM, id, provincia, tipo);
   id = 2020;
-  SubirMatricula("2020_Matricula.csv", &temp, rM, id, provincia, tipo);
+  SubirNodoMatricula("2020_NodoMatricula.csv", &temp, rM, id, provincia, tipo);
   id = 2021;
-  SubirMatricula("2021_Matricula.csv", &temp, rM, id, provincia, tipo);
+  SubirNodoMatricula("2021_NodoMatricula.csv", &temp, rM, id, provincia, tipo);
 
-  ClasificacionMatricula(temp, RegistroMatricula);
+  ClasificacionNodoMatricula(temp, matricula);
 }
 
-void SubirMatricula(char *archivo, Matricula **RegistroMatricula,
-                    registroMatricula rM, int id, char provincia[20],
+void SubirNodoMatricula(char *archivo, NodoMatricula **matricula,
+                    Matricula rM, int id, char provincia[20],
                     char tipo[10]) {
   FILE *a;
   char cabecera[300];
@@ -89,22 +89,22 @@ void SubirMatricula(char *archivo, Matricula **RegistroMatricula,
     while (fscanf(a, " %30[^,],%9[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
                   provincia, tipo, &rM.repitentes[0], &rM.repitentes[1],
                   &rM.repitentes[2], &rM.repitentes[3], &rM.repitentes[4],
-                  &rM.repitentes[5], &rM.matriculas[0], &rM.matriculas[1],
-                  &rM.matriculas[2], &rM.matriculas[3], &rM.matriculas[4],
-                  &rM.matriculas[5]) == 14) {
-      InsertarRegistroMatricula(RegistroMatricula, rM, id, provincia, tipo);
+                  &rM.repitentes[5], &rM.matricula[0], &rM.matricula[1],
+                  &rM.matricula[2], &rM.matricula[3], &rM.matricula[4],
+                  &rM.matricula[5]) == 14) {
+      InsertarMatricula(matricula, rM, id, provincia, tipo);
     }
     fclose(a);
   }
 }
 
-void ClasificacionMatricula(Matricula *temp, Matricula **RegistroMatricula) {
-  Matricula *tempo = temp;
+void ClasificacionNodoMatricula(NodoMatricula *temp, NodoMatricula **matricula) {
+  NodoMatricula *tempo = temp;
 
   while (tempo != NULL) {
 
     int bandera = 0;
-    Matricula *aux = *RegistroMatricula;
+    NodoMatricula *aux = *matricula;
 
     while (aux != NULL && bandera == 0) {
       if (strcmp(tempo->provincia, aux->provincia) == 0 &&
@@ -117,12 +117,12 @@ void ClasificacionMatricula(Matricula *temp, Matricula **RegistroMatricula) {
     }
     if (bandera) { // Si encuentra coincidencias las suma a nuestro nodo
       for (int i = 0; i < 6; i++) {
-        aux->reg.matriculas[i] += tempo->reg.matriculas[i];
+        aux->reg.matricula[i] += tempo->reg.matricula[i];
         aux->reg.repitentes[i] += tempo->reg.repitentes[i];
       }
     } else { // Si no las encuentra crea un nuevo nodo y lo agrega a la lista
              // nueva
-      Matricula *nuevo = (Matricula *)malloc(sizeof(Matricula));
+      NodoMatricula *nuevo = (NodoMatricula *)malloc(sizeof(NodoMatricula));
       if (nuevo != NULL) {
 
         nuevo->sig = NULL;
@@ -131,15 +131,15 @@ void ClasificacionMatricula(Matricula *temp, Matricula **RegistroMatricula) {
         nuevo->id = tempo->id;
 
         for (int i = 0; i < 6; i++) {
-          nuevo->reg.matriculas[i] = tempo->reg.matriculas[i];
+          nuevo->reg.matricula[i] = tempo->reg.matricula[i];
           nuevo->reg.repitentes[i] = tempo->reg.repitentes[i];
         }
 
         // Agregando a la lista nueva
-        if (*RegistroMatricula == NULL) {
-          *RegistroMatricula = nuevo;
+        if (*matricula == NULL) {
+          *matricula = nuevo;
         } else {
-          Matricula *aux2 = *RegistroMatricula;
+          NodoMatricula *aux2 = *matricula;
           while (aux2->sig != NULL) {
             aux2 = aux2->sig;
           }
@@ -357,8 +357,8 @@ void Clasificacion(NodoTrayectoria *temp,
   }
 }
 
-void ImprimirLista(NodoTrayectoria *trayectoria, Matricula *matricula) {
-  Matricula *aux2 = matricula;
+void ImprimirLista(NodoTrayectoria *trayectoria, NodoMatricula *matricula) {
+  NodoMatricula *aux2 = matricula;
   NodoTrayectoria *aux = trayectoria;
   printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
          "%-6s | %-6s | %-6s | %-6s | %-6s | %-9s | %s\n",
@@ -419,10 +419,10 @@ void ImprimirLista(NodoTrayectoria *trayectoria, Matricula *matricula) {
             aux2->provincia, aux2->sector, aux2->reg.repitentes[0],
             aux2->reg.repitentes[1], aux2->reg.repitentes[2],
             aux2->reg.repitentes[3], aux2->reg.repitentes[4],
-            aux2->reg.repitentes[5], aux2->reg.matriculas[0],
-            aux2->reg.matriculas[1], aux2->reg.matriculas[2],
-            aux2->reg.matriculas[3], aux2->reg.matriculas[4],
-            aux2->reg.matriculas[5], aux2->id);
+            aux2->reg.repitentes[5], aux2->reg.matricula[0],
+            aux2->reg.matricula[1], aux2->reg.matricula[2],
+            aux2->reg.matricula[3], aux2->reg.matricula[4],
+            aux2->reg.matricula[5], aux2->id);
     aux2 = aux2->sig;
   }
   fclose(archivo);
@@ -440,16 +440,16 @@ void ImprimirLista(NodoTrayectoria *trayectoria, Matricula *matricula) {
            aux2->provincia, aux2->sector, aux2->reg.repitentes[0],
            aux2->reg.repitentes[1], aux2->reg.repitentes[2],
            aux2->reg.repitentes[3], aux2->reg.repitentes[4],
-           aux2->reg.repitentes[5], aux2->reg.matriculas[0],
-           aux2->reg.matriculas[1], aux2->reg.matriculas[2],
-           aux2->reg.matriculas[3], aux2->reg.matriculas[4],
-           aux2->reg.matriculas[5], aux2->id);
+           aux2->reg.repitentes[5], aux2->reg.matricula[0],
+           aux2->reg.matricula[1], aux2->reg.matricula[2],
+           aux2->reg.matricula[3], aux2->reg.matricula[4],
+           aux2->reg.matricula[5], aux2->id);
     aux2 = aux2->sig;
   }
 }
 
-void BuscarPorProvincia(Matricula *RegistroMatricula,
-                        NodoTrayectoria *RegistroTrayectoria, Matricula **tempM,
+void BuscarPorProvincia(NodoMatricula *matricula,
+                        NodoTrayectoria *RegistroTrayectoria, NodoMatricula **tempM,
                         NodoTrayectoria **tempT, int *cont) {
   if (*(cont) < 3) {    //Lo hara hasta que el contador sea 3, esto es para controlar que luego de pasar por los 3 filtros no continue preguntando 
     (*cont)++;
@@ -460,18 +460,18 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
 
     NodoTrayectoria *lista_a_filtrar_T =
         (*tempT != NULL) ? *tempT : RegistroTrayectoria;    //Inicializamos una lista auxiliar que determinara cual lista filtramos, si una que ya haya sido filtrada o si filtramos la lista original
-    Matricula *lista_a_filtrar_M =
-        (*tempM != NULL) ? *tempM : RegistroMatricula;    //Es una lista por cada registro
+    NodoMatricula *lista_a_filtrar_M =
+        (*tempM != NULL) ? *tempM : matricula;    //Es una lista por cada registro
 
     NodoTrayectoria *nuevo_tempT = NULL;
     NodoTrayectoria *lista_tempT = NULL;
-    Matricula *nuevo_tempM = NULL;
-    Matricula *lista_tempM = NULL;
+    NodoMatricula *nuevo_tempM = NULL;
+    NodoMatricula *lista_tempM = NULL;
 
    /* if (*tempT != NULL) { /* LiberarListaTrayectoria(tempT); 
       *tempT = NULL;
     }
-    if (*tempM != NULL) { /* LiberarListaMatricula(tempM); 
+    if (*tempM != NULL) { /* LiberarListaNodoMatricula(tempM); 
       *tempM = NULL;
     }
       Se deben liberar las memorias de las listas temporales luego de haber aplicado todos los filtros o de que la persona no quuiera aplicar mas, es decir, en el menu cuando sale de las funciones de busqueda
@@ -570,7 +570,7 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
            "6_REP", "1_MTR", "2_MTR", "3_MTR", "4_MTR", "5_MTR", "6_MTR",
            "Anio");
 
-    Matricula *aux2 = lista_a_filtrar_M;
+    NodoMatricula *aux2 = lista_a_filtrar_M;
 
     while (aux2 != NULL) {
       char aux2_provincia_normalizada[25];    //Hace la misma comparacion con la trayectoria
@@ -594,18 +594,18 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
             aux2->provincia, aux2->sector, aux2->reg.repitentes[0],
             aux2->reg.repitentes[1], aux2->reg.repitentes[2],
             aux2->reg.repitentes[3], aux2->reg.repitentes[4],
-            aux2->reg.repitentes[5], aux2->reg.matriculas[0],
-            aux2->reg.matriculas[1], aux2->reg.matriculas[2],
-            aux2->reg.matriculas[3], aux2->reg.matriculas[4],
-            aux2->reg.matriculas[5], aux2->id);
-        Matricula *nuevo2 = (Matricula *)malloc(sizeof(Matricula));
+            aux2->reg.repitentes[5], aux2->reg.matricula[0],
+            aux2->reg.matricula[1], aux2->reg.matricula[2],
+            aux2->reg.matricula[3], aux2->reg.matricula[4],
+            aux2->reg.matricula[5], aux2->id);
+        NodoMatricula *nuevo2 = (NodoMatricula *)malloc(sizeof(NodoMatricula));
         if (nuevo2 != NULL) {
           nuevo2->sig = NULL;
           strcpy(nuevo2->provincia, aux2->provincia);
           strcpy(nuevo2->sector, aux2->sector);
           nuevo2->id = aux2->id;
           for (int i = 0; i < 6; i++) {
-            nuevo2->reg.matriculas[i] = aux2->reg.matriculas[i];
+            nuevo2->reg.matricula[i] = aux2->reg.matricula[i];
             nuevo2->reg.repitentes[i] = aux2->reg.repitentes[i];
           }
 
@@ -643,11 +643,11 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
 
         switch (opcion) {
         case 'a':
-          BuscarPorAnio(RegistroMatricula, RegistroTrayectoria, tempM, tempT,
+          BuscarPorAnio(matricula, RegistroTrayectoria, tempM, tempT,
                         cont);
           break;
         case 'b':
-          BuscarPorTipo(RegistroMatricula, RegistroTrayectoria, tempM, tempT,
+          BuscarPorTipo(matricula, RegistroTrayectoria, tempM, tempT,
                         cont);
           break;
         default:
@@ -661,8 +661,8 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
   }
 }
 
-void BuscarPorAnio(Matricula *RegistroMatricula,
-                   NodoTrayectoria *RegistroTrayectoria, Matricula **tempM,
+void BuscarPorAnio(NodoMatricula *Matricula,
+                   NodoTrayectoria *RegistroTrayectoria, NodoMatricula **tempM,
                    NodoTrayectoria **tempT, int *cont) {
   if (*(cont) < 3) {
     (*cont)++;
@@ -674,18 +674,18 @@ void BuscarPorAnio(Matricula *RegistroMatricula,
 
     NodoTrayectoria *lista_a_filtrar_T =
         (*tempT != NULL) ? *tempT : RegistroTrayectoria;
-    Matricula *lista_a_filtrar_M =
-        (*tempM != NULL) ? *tempM : RegistroMatricula;
+    NodoMatricula *lista_a_filtrar_M =
+        (*tempM != NULL) ? *tempM : Matricula;
 
     NodoTrayectoria *nuevo_tempT = NULL;
     NodoTrayectoria *lista_tempT = NULL;
-    Matricula *nuevo_tempM = NULL;
-    Matricula *lista_tempM = NULL;
+    NodoMatricula *nuevo_tempM = NULL;
+    NodoMatricula *lista_tempM = NULL;
 
     /* if (*tempT != NULL) { /* LiberarListaTrayectoria(tempT); 
       *tempT = NULL;
     }
-    if (*tempM != NULL) { /* LiberarListaMatricula(tempM); 
+    if (*tempM != NULL) { /* LiberarListaNodoMatricula(tempM); 
       *tempM = NULL;
     }
       Se deben liberar las memorias de las listas temporales luego de haber aplicado todos los filtros o de que la persona no quuiera aplicar mas, es decir, en el menu cuando sale de las funciones de busqueda
@@ -748,7 +748,7 @@ void BuscarPorAnio(Matricula *RegistroMatricula,
            "6_REP", "1_MTR", "2_MTR", "3_MTR", "4_MTR", "5_MTR", "6_MTR",
            "Anio");
 
-    Matricula *auxM = lista_a_filtrar_M;
+    NodoMatricula *auxM = lista_a_filtrar_M;
 
     while (auxM != NULL) {
       if (auxM->id == anio) {
@@ -759,12 +759,12 @@ void BuscarPorAnio(Matricula *RegistroMatricula,
             auxM->provincia, auxM->sector, auxM->reg.repitentes[0],
             auxM->reg.repitentes[1], auxM->reg.repitentes[2],
             auxM->reg.repitentes[3], auxM->reg.repitentes[4],
-            auxM->reg.repitentes[5], auxM->reg.matriculas[0],
-            auxM->reg.matriculas[1], auxM->reg.matriculas[2],
-            auxM->reg.matriculas[3], auxM->reg.matriculas[4],
-            auxM->reg.matriculas[5], auxM->id);
+            auxM->reg.repitentes[5], auxM->reg.matricula[0],
+            auxM->reg.matricula[1], auxM->reg.matricula[2],
+            auxM->reg.matricula[3], auxM->reg.matricula[4],
+            auxM->reg.matricula[5], auxM->id);
 
-        Matricula *nuevoM = malloc(sizeof(Matricula));
+        NodoMatricula *nuevoM = malloc(sizeof(NodoMatricula));
         if (nuevoM != NULL) {
           *nuevoM = *auxM;
           nuevoM->sig = NULL;
@@ -799,11 +799,11 @@ void BuscarPorAnio(Matricula *RegistroMatricula,
 
         switch (opcion) {
         case 'a':
-          BuscarPorProvincia(RegistroMatricula, RegistroTrayectoria, tempM,
+          BuscarPorProvincia(Matricula, RegistroTrayectoria, tempM,
                              tempT, cont);
           break;
         case 'b':
-          BuscarPorTipo(RegistroMatricula, RegistroTrayectoria, tempM, tempT,
+          BuscarPorTipo(Matricula, RegistroTrayectoria, tempM, tempT,
                         cont);
           break;
         default:
@@ -817,8 +817,8 @@ void BuscarPorAnio(Matricula *RegistroMatricula,
   }
 }
 
-void BuscarPorTipo(Matricula *RegistroMatricula,
-                   NodoTrayectoria *RegistroTrayectoria, Matricula **tempM,
+void BuscarPorTipo(NodoMatricula *Matricula,
+                   NodoTrayectoria *RegistroTrayectoria, NodoMatricula **tempM,
                    NodoTrayectoria **tempT, int *cont) {
   if (*(cont) < 3) {
     (*cont)++;
@@ -829,18 +829,18 @@ void BuscarPorTipo(Matricula *RegistroMatricula,
 
     NodoTrayectoria *lista_a_filtrar_T =
         (*tempT != NULL) ? *tempT : RegistroTrayectoria;
-    Matricula *lista_a_filtrar_M =
-        (*tempM != NULL) ? *tempM : RegistroMatricula;
+    NodoMatricula *lista_a_filtrar_M =
+        (*tempM != NULL) ? *tempM : Matricula;
 
     NodoTrayectoria *nuevo_tempT = NULL;
     NodoTrayectoria *lista_tempT = NULL;
-    Matricula *nuevo_tempM = NULL;
-    Matricula *lista_tempM = NULL;
+    NodoMatricula *nuevo_tempM = NULL;
+    NodoMatricula *lista_tempM = NULL;
 
     /* if (*tempT != NULL) { /* LiberarListaTrayectoria(tempT); 
       *tempT = NULL;
     }
-    if (*tempM != NULL) { /* LiberarListaMatricula(tempM); 
+    if (*tempM != NULL) { /* LiberarListaNodoMatricula(tempM); 
       *tempM = NULL;
     }
       Se deben liberar las memorias de las listas temporales luego de haber aplicado todos los filtros o de que la persona no quuiera aplicar mas, es decir, en el menu cuando sale de las funciones de busqueda
@@ -940,7 +940,7 @@ void BuscarPorTipo(Matricula *RegistroMatricula,
            "6_REP", "1_MTR", "2_MTR", "3_MTR", "4_MTR", "5_MTR", "6_MTR",
            "Anio");
 
-    Matricula *aux2 = lista_a_filtrar_M;
+    NodoMatricula *aux2 = lista_a_filtrar_M;
 
     while (aux2 != NULL) {
       char aux2_sector_normalizado[25];
@@ -965,19 +965,19 @@ void BuscarPorTipo(Matricula *RegistroMatricula,
             aux2->provincia, aux2->sector, aux2->reg.repitentes[0],
             aux2->reg.repitentes[1], aux2->reg.repitentes[2],
             aux2->reg.repitentes[3], aux2->reg.repitentes[4],
-            aux2->reg.repitentes[5], aux2->reg.matriculas[0],
-            aux2->reg.matriculas[1], aux2->reg.matriculas[2],
-            aux2->reg.matriculas[3], aux2->reg.matriculas[4],
-            aux2->reg.matriculas[5], aux2->id);
+            aux2->reg.repitentes[5], aux2->reg.matricula[0],
+            aux2->reg.matricula[1], aux2->reg.matricula[2],
+            aux2->reg.matricula[3], aux2->reg.matricula[4],
+            aux2->reg.matricula[5], aux2->id);
 
-        Matricula *nuevo2 = (Matricula *)malloc(sizeof(Matricula));
+        NodoMatricula *nuevo2 = (NodoMatricula *)malloc(sizeof(NodoMatricula));
         if (nuevo2 != NULL) {
           nuevo2->sig = NULL;
           strcpy(nuevo2->sector, aux2->sector);
           strcpy(nuevo2->provincia, aux2->provincia);
           nuevo2->id = aux2->id;
           for (int i = 0; i < 6; i++) {
-            nuevo2->reg.matriculas[i] = aux2->reg.matriculas[i];
+            nuevo2->reg.matricula[i] = aux2->reg.matricula[i];
             nuevo2->reg.repitentes[i] = aux2->reg.repitentes[i];
           }
 
@@ -1014,11 +1014,11 @@ void BuscarPorTipo(Matricula *RegistroMatricula,
 
         switch (opcion) {
         case 'a':
-          BuscarPorProvincia(RegistroMatricula, RegistroTrayectoria, tempM,
+          BuscarPorProvincia(Matricula, RegistroTrayectoria, tempM,
                              tempT, cont);
           break;
         case 'b':
-          BuscarPorAnio(RegistroMatricula, RegistroTrayectoria, tempM, tempT,
+          BuscarPorAnio(Matricula, RegistroTrayectoria, tempM, tempT,
                         cont);
           break;
         default:
