@@ -451,7 +451,7 @@ void ImprimirLista(NodoTrayectoria *trayectoria, Matricula *matricula) {
 void BuscarPorProvincia(Matricula *RegistroMatricula,
                         NodoTrayectoria *RegistroTrayectoria, Matricula **tempM,
                         NodoTrayectoria **tempT, int *cont) {
-  if (*(cont) < 3) {
+  if (*(cont) < 3) {    //Lo hara hasta que el contador sea 3, esto es para controlar que luego de pasar por los 3 filtros no continue preguntando 
     (*cont)++;
     char provincia[25];
     char provincia_normalizada[25];
@@ -459,26 +459,28 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
     int bandera = 0;
 
     NodoTrayectoria *lista_a_filtrar_T =
-        (*tempT != NULL) ? *tempT : RegistroTrayectoria;
+        (*tempT != NULL) ? *tempT : RegistroTrayectoria;    //Inicializamos una lista auxiliar que determinara cual lista filtramos, si una que ya haya sido filtrada o si filtramos la lista original
     Matricula *lista_a_filtrar_M =
-        (*tempM != NULL) ? *tempM : RegistroMatricula;
+        (*tempM != NULL) ? *tempM : RegistroMatricula;    //Es una lista por cada registro
 
     NodoTrayectoria *nuevo_tempT = NULL;
     NodoTrayectoria *lista_tempT = NULL;
     Matricula *nuevo_tempM = NULL;
     Matricula *lista_tempM = NULL;
 
-    if (*tempT != NULL) { /* LiberarListaTrayectoria(tempT); */
+   /* if (*tempT != NULL) { /* LiberarListaTrayectoria(tempT); 
       *tempT = NULL;
     }
-    if (*tempM != NULL) { /* LiberarListaMatricula(tempM); */
+    if (*tempM != NULL) { /* LiberarListaMatricula(tempM); 
       *tempM = NULL;
     }
+      Se deben liberar las memorias de las listas temporales luego de haber aplicado todos los filtros o de que la persona no quuiera aplicar mas, es decir, en el menu cuando sale de las funciones de busqueda
+    */
 
     printf("\nIngrese el nombre de la provincia que desee buscar: ");
     scanf(" %24[^\n]", provincia);
 
-    {
+    
       int j = 0;
       for (int i = 0; provincia[i] != '\0' && j < 24; i++) {
         if (provincia[i] != ' ' && provincia[i] != '\t') {
@@ -487,7 +489,7 @@ void BuscarPorProvincia(Matricula *RegistroMatricula,
         }
       }
       provincia_normalizada[j] = '\0';
-    }
+    
 
     printf("\nLos datos encontrados son:\n");
     printf("\n\n");
@@ -680,8 +682,14 @@ void BuscarPorAnio(Matricula *RegistroMatricula,
     Matricula *nuevo_tempM = NULL;
     Matricula *lista_tempM = NULL;
 
-    *tempT = NULL;
-    *tempM = NULL;
+    /* if (*tempT != NULL) { /* LiberarListaTrayectoria(tempT); 
+      *tempT = NULL;
+    }
+    if (*tempM != NULL) { /* LiberarListaMatricula(tempM); 
+      *tempM = NULL;
+    }
+      Se deben liberar las memorias de las listas temporales luego de haber aplicado todos los filtros o de que la persona no quuiera aplicar mas, es decir, en el menu cuando sale de las funciones de busqueda
+    */
 
     NodoTrayectoria *auxT = lista_a_filtrar_T;
 
@@ -829,12 +837,14 @@ void BuscarPorTipo(Matricula *RegistroMatricula,
     Matricula *nuevo_tempM = NULL;
     Matricula *lista_tempM = NULL;
 
-    if (*tempT != NULL) {
+    /* if (*tempT != NULL) { /* LiberarListaTrayectoria(tempT); 
       *tempT = NULL;
     }
-    if (*tempM != NULL) {
+    if (*tempM != NULL) { /* LiberarListaMatricula(tempM); 
       *tempM = NULL;
     }
+      Se deben liberar las memorias de las listas temporales luego de haber aplicado todos los filtros o de que la persona no quuiera aplicar mas, es decir, en el menu cuando sale de las funciones de busqueda
+    */
 
     printf("\nIngrese el tipo que desee buscar: ");
     scanf(" %24[^\n]", tipo);

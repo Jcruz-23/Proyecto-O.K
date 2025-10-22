@@ -69,8 +69,8 @@ int Lectura(Trayectoria *, FILE *, char[25], char[10]);
 void Carga(NodoTrayectoria **, Trayectoria, char[25], char[10]);
 void Clasificacion(NodoTrayectoria *, NodoTrayectoria **);
 void ImprimirLista(NodoTrayectoria *, Matricula *);
-void Liberar(NodoTrayectoria **, NodoTrayectoria **, Matricula **, Matricula **);
-
+//void Liberar(NodoTrayectoria **, NodoTrayectoria **, Matricula **, Matricula **);
+void Liberar(NodoTrayectoria **);
 void Menu(Matricula *, NodoTrayectoria *);
 // Esta funcion tiene que mostrar por consola una lista de opciones a, b, c, etc. Con el siguiente formato:
 // ------- MENU -------
