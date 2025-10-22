@@ -2,10 +2,10 @@
 
 int main() {
   NodoTrayectoria *RegistroTrayectoria = NULL;
-  NodoMatricula *Matricula = NULL;
+  NodoMatricula *RegistroMatricula = NULL;
   InsertarNodoTrayectoria(&RegistroTrayectoria);
-  LecturaNodoMatricula(&Matricula);
-  ImprimirLista(RegistroTrayectoria, Matricula);
+  LecturaNodoMatricula(&RegistroMatricula);
+  ImprimirLista(RegistroTrayectoria, RegistroMatricula);
   return 0;
 }
 
@@ -51,9 +51,9 @@ void ImprimirListaNodoMatricula(NodoMatricula *m) {
         "%-6d | %-6d | %-6d | %-6d | %-6d | %d\n",
         aux->provincia, aux->sector, aux->reg.repitentes[0],
         aux->reg.repitentes[1], aux->reg.repitentes[2], aux->reg.repitentes[3],
-        aux->reg.repitentes[4], aux->reg.repitentes[5], aux->reg.NodoMatriculas[0],
-        aux->reg.NodoMatriculas[1], aux->reg.NodoMatriculas[2], aux->reg.NodoMatriculas[3],
-        aux->reg.NodoMatriculas[4], aux->reg.NodoMatriculas[5], aux->id);
+        aux->reg.repitentes[4], aux->reg.repitentes[5], aux->reg.matricula[0],
+        aux->reg.matricula[1], aux->reg.matricula[2], aux->reg.matricula[3],
+        aux->reg.matricula[4], aux->reg.matricula[5], aux->id);
     aux = aux->sig;
   }
 }
@@ -93,9 +93,9 @@ void SubirNodoMatricula(char *archivo, NodoMatricula **matricula,
     while (fscanf(a, " %30[^,],%9[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
                   provincia, tipo, &rM.repitentes[0], &rM.repitentes[1],
                   &rM.repitentes[2], &rM.repitentes[3], &rM.repitentes[4],
-                  &rM.repitentes[5], &rM.NodoMatriculas[0], &rM.NodoMatriculas[1],
-                  &rM.NodoMatriculas[2], &rM.NodoMatriculas[3], &rM.NodoMatriculas[4],
-                  &rM.NodoMatriculas[5]) == 14) {
+                  &rM.repitentes[5], &rM.matricula[0], &rM.matricula[1],
+                  &rM.matricula[2], &rM.matricula[3], &rM.matricula[4],
+                  &rM.matricula[5]) == 14) {
 
       InsertarMatricula(matricula, rM, id, provincia, tipo);
     }
@@ -122,7 +122,7 @@ void ClasificacionNodoMatricula(NodoMatricula *temp, NodoMatricula **Matricula) 
     }
     if (bandera) { // Si encuentra coincidencias las suma a nuestro nodo
       for (int i = 0; i < 6; i++) {
-        aux->reg.NodoMatriculas[i] += tempo->reg.NodoMatriculas[i];
+        aux->reg.matricula[i] += tempo->reg.matricula[i];
         aux->reg.repitentes[i] += tempo->reg.repitentes[i];
       }
 
@@ -136,7 +136,7 @@ void ClasificacionNodoMatricula(NodoMatricula *temp, NodoMatricula **Matricula) 
         nuevo->id = tempo->id;
 
         for (int i = 0; i < 6; i++) {
-          nuevo->reg.NodoMatriculas[i] = tempo->reg.NodoMatriculas[i];
+          nuevo->reg.matricula[i] = tempo->reg.matricula[i];
           nuevo->reg.repitentes[i] = tempo->reg.repitentes[i];
         }
 
@@ -419,15 +419,15 @@ void ImprimirLista(NodoTrayectoria *trayectoria, NodoMatricula *matricula) {
             "%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %d\n",
             aux2->provincia, aux2->sector, aux2->reg.repitentes[0],aux2->reg.repitentes[1],aux2->reg.repitentes[2],
                     aux2->reg.repitentes[3],aux2->reg.repitentes[4],aux2->reg.repitentes[5],
-                    aux2->reg.NodoMatriculas[0],aux2->reg.NodoMatriculas[1],aux2->reg.NodoMatriculas[2],
-                    aux2->reg.NodoMatriculas[3],aux2->reg.NodoMatriculas[4],aux2->reg.NodoMatriculas[5], aux2->id);
+                    aux2->reg.matricula[0],aux2->reg.matricula[1],aux2->reg.matricula[2],
+                    aux2->reg.matricula[3],aux2->reg.matricula[4],aux2->reg.matricula[5], aux2->id);
         aux2 = aux2->sig;
     }
   fclose(archivo);
   printf("\n\n");
 
   aux2 = matricula;
-  //Imprimimos las NodoMatriculas
+  //Imprimimos las matricula
   printf( "%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
             "%-6s | %-6s | %-6s | %-6s | %-6s | %s\n",
             "Provincia", "Sector", "1_REP", "2_REP", "3_REP", "4_REP", "5_REP", "6_REP",
@@ -438,8 +438,8 @@ void ImprimirLista(NodoTrayectoria *trayectoria, NodoMatricula *matricula) {
             "%-6d | %-6d | %-6d | %-6d | %-6d | %d\n",
             aux2->provincia, aux2->sector, aux2->reg.repitentes[0],aux2->reg.repitentes[1],aux2->reg.repitentes[2],
                     aux2->reg.repitentes[3],aux2->reg.repitentes[4],aux2->reg.repitentes[5],
-                    aux2->reg.NodoMatriculas[0],aux2->reg.NodoMatriculas[1],aux2->reg.NodoMatriculas[2],
-                    aux2->reg.NodoMatriculas[3],aux2->reg.NodoMatriculas[4],aux2->reg.NodoMatriculas[5], aux2->id);
+                    aux2->reg.matricula[0],aux2->reg.matricula[1],aux2->reg.matricula[2],
+                    aux2->reg.matricula[3],aux2->reg.matricula[4],aux2->reg.matricula[5], aux2->id);
         aux2 = aux2->sig;
     }
 }

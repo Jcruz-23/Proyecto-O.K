@@ -66,11 +66,11 @@ void LecturaNodoMatricula(NodoMatricula **matricula) {
   char tipo[10];
   Matricula rM;
   id = 2019;
-  SubirNodoMatricula("2019_NodoMatricula.csv", &temp, rM, id, provincia, tipo);
+  SubirNodoMatricula("2019_Matricula.csv", &temp, rM, id, provincia, tipo);
   id = 2020;
-  SubirNodoMatricula("2020_NodoMatricula.csv", &temp, rM, id, provincia, tipo);
+  SubirNodoMatricula("2020_Matricula.csv", &temp, rM, id, provincia, tipo);
   id = 2021;
-  SubirNodoMatricula("2021_NodoMatricula.csv", &temp, rM, id, provincia, tipo);
+  SubirNodoMatricula("2021_Matricula.csv", &temp, rM, id, provincia, tipo);
 
   ClasificacionNodoMatricula(temp, matricula);
 }
