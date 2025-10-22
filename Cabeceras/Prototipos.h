@@ -62,11 +62,11 @@ typedef struct Nodo
 
 void InsertarMatricula(NodoMatricula **, Matricula, int, char[20], char[10]);
 void InsertarNodoTrayectoria(NodoTrayectoria **);
-void LecturaNodoMatricula(NodoMatricula **);
+void LecturaMatricula(NodoMatricula **);
 int Lectura(Trayectoria *, FILE *, char[25], char[10]);
 void SubirNodoMatricula(char *, NodoMatricula **, Matricula, int, char[20], char[10]);
 void Carga(NodoTrayectoria **, Trayectoria, char[25], char[10]);
-void ClasificacionNodoMatricula(NodoMatricula *, NodoMatricula **);
+void ClasificacionMatricula(NodoMatricula *, NodoMatricula **);
 void Clasificacion(NodoTrayectoria *, NodoTrayectoria **);
 void ImprimirLista(NodoTrayectoria *, NodoMatricula *);
 void LiberarM(NodoMatricula **);

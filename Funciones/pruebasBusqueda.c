@@ -7,7 +7,7 @@ int main() {
   NodoTrayectoria *tempT = NULL;
   int cont = 0;
   InsertarNodoTrayectoria(&RegistroTrayectoria);
-  LecturaNodoMatricula(&Matricula);
+  LecturaMatricula(&Matricula);
   ImprimirLista(RegistroTrayectoria, Matricula);
   printf("\n--- Filtro 1: Buscar por provincia ---\n");
   BuscarPorProvincia(Matricula, RegistroTrayectoria, &tempM, &tempT,
@@ -59,7 +59,7 @@ void ImprimirListaNodoMatricula(NodoMatricula *m) {
   }
 }
 
-void LecturaNodoMatricula(NodoMatricula **matricula) {
+void LecturaMatricula(NodoMatricula **matricula) {
   NodoMatricula *temp = NULL;
   int id = 0;
   char provincia[31];
@@ -72,7 +72,7 @@ void LecturaNodoMatricula(NodoMatricula **matricula) {
   id = 2021;
   SubirNodoMatricula("2021_Matricula.csv", &temp, rM, id, provincia, tipo);
 
-  ClasificacionNodoMatricula(temp, matricula);
+  ClasificacionMatricula(temp, matricula);
 }
 
 void SubirNodoMatricula(char *archivo, NodoMatricula **matricula,
@@ -98,7 +98,7 @@ void SubirNodoMatricula(char *archivo, NodoMatricula **matricula,
   }
 }
 
-void ClasificacionNodoMatricula(NodoMatricula *temp, NodoMatricula **matricula) {
+void ClasificacionMatricula(NodoMatricula *temp, NodoMatricula **matricula) {
   NodoMatricula *tempo = temp;
 
   while (tempo != NULL) {
