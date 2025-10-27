@@ -6,7 +6,7 @@ int main()
     NodoTrayectoria *RegistroTrayectoria = NULL;
     NodoMatricula *matricula = NULL;
     InsertarNodoTrayectoria(&RegistroTrayectoria);
-    LecturaNodoMatricula(&matricula);
+    LecturaMatricula(&matricula);
     VerTodasLasProvincias(matricula, RegistroTrayectoria);
     //ImprimirLista(RegistroTrayectoria, Matricula);
     return 0;
@@ -57,7 +57,7 @@ void ImprimirListaNodoMatricula(NodoMatricula *m)
     }
 }
 
-void LecturaNodoMatricula(NodoMatricula **matricula)
+void LecturaMatricula(NodoMatricula **matricula)
 {
     NodoMatricula *temp = NULL;
     int id = 0;
@@ -71,7 +71,7 @@ void LecturaNodoMatricula(NodoMatricula **matricula)
     id = 2021;
     SubirNodoMatricula("2021_NodoMatricula.csv", &temp, rM, id, provincia, tipo);
 
-    ClasificacionNodoMatricula(temp, matricula);
+    ClasificacionMatricula(temp, matricula);
 }
 
 void SubirNodoMatricula(char *archivo, NodoMatricula **matricula,

@@ -10,10 +10,10 @@
 // s. Salir
 // Tener en cuenta que al mostrar las ultimas tres opciones, hay que ofrecer si se quiere combinar el filtro que se elija con algun otro.
 
-void Menu(Matricula *mat, NodoTrayectoria *tr)
+void Menu(NodoMatricula *mat, NodoTrayectoria *tr)
 {
     char opcion = '\0';
-    Matricula *tempM = NULL;
+    NodoMatricula *tempM = NULL;
     NodoTrayectoria *tempT = NULL;
     int cont = 0;
 
