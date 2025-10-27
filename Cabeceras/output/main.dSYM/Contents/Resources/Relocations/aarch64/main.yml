@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/martinsuarez/Documents/Proyecto-O.K/Cabeceras/output/main'
+relocations:     []
+...
