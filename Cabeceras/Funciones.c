@@ -887,6 +887,15 @@ void BuscarPorProvincia(NodoMatricula *matricula,
         default:
           printf("\nNo ha ingresado una opcion valida\n");
         }
+      }else{
+        while(tempM != NULL || tempT != NULL){
+          NodoMatricula *proxM = (*tempM)->sig;
+          NodoTrayectoria *proxT = (*tempT)->sig;
+          free(*tempM);
+          free(*tempT);
+          *tempM = proxM;
+          *tempT = proxT;
+        }
       }
     }
   }
@@ -1052,6 +1061,15 @@ void BuscarPorAnio(NodoMatricula *Matricula,
           break;
         default:
           printf("\nOpción no válida.\n");
+        }
+      }else{
+        while(tempM != NULL || tempT != NULL){
+          NodoMatricula *proxM = (*tempM)->sig;
+          NodoTrayectoria *proxT = (*tempT)->sig;
+          free(*tempM);
+          free(*tempT);
+          *tempM = proxM;
+          *tempT = proxT;
         }
       }
     }
@@ -1288,6 +1306,15 @@ void BuscarPorTipo(NodoMatricula *Matricula,
           break;
         default:
           printf("\nOpción no válida.\n");
+        }
+      }else{
+        while(tempM != NULL || tempT != NULL){
+          NodoMatricula *proxM = (*tempM)->sig;
+          NodoTrayectoria *proxT = (*tempT)->sig;
+          free(*tempM);
+          free(*tempT);
+          *tempM = proxM;
+          *tempT = proxT;
         }
       }
     }
