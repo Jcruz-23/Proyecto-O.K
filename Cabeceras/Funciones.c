@@ -194,11 +194,11 @@ void LecturaMatricula(NodoMatricula **matricula)
   char tipo[10];
   Matricula rM = {0};
   id = 2019;
-  SubirNodoMatricula("Cabeceras/2019_Matricula.csv", &temp, rM, id, provincia, tipo);
+  SubirNodoMatricula("Otros/2019_Matricula.csv", &temp, rM, id, provincia, tipo);
   id = 2020;
-  SubirNodoMatricula("Cabeceras/2020_Matricula.csv", &temp, rM, id, provincia, tipo);
+  SubirNodoMatricula("Otros/2020_Matricula.csv", &temp, rM, id, provincia, tipo);
   id = 2021;
-  SubirNodoMatricula("Cabeceras/2021_Matricula.csv", &temp, rM, id, provincia, tipo);
+  SubirNodoMatricula("Otros/2021_Matricula.csv", &temp, rM, id, provincia, tipo);
 
   ClasificacionMatricula(temp, matricula);
 }
@@ -320,7 +320,7 @@ void InsertarNodoTrayectoria(NodoTrayectoria **RegistroTrayectoria)
       char basura[20000];
       FILE *archivo;
       printf("Abriendo archivo para lectura\n");
-      archivo = fopen("Cabeceras/2019_Trayectoria.csv", "r");
+      archivo = fopen("Otros/2019_Trayectoria.csv", "r");
       if (archivo == NULL)
       {
         printf("\nNo se pudo leer el archivo\n");
@@ -366,7 +366,7 @@ void InsertarNodoTrayectoria(NodoTrayectoria **RegistroTrayectoria)
       char basura[20000];
       FILE *archivo;
       printf("Abriendo archivo para lectura\n");
-      archivo = fopen("Cabeceras/2020_Trayectoria.csv", "r");
+      archivo = fopen("Otros/2020_Trayectoria.csv", "r");
       if (archivo == NULL)
       {
         printf("\nNo se pudo leer el archivo\n");
@@ -411,7 +411,7 @@ void InsertarNodoTrayectoria(NodoTrayectoria **RegistroTrayectoria)
       char basura[20000];
       FILE *archivo;
       printf("Abriendo archivo para lectura\n");
-      archivo = fopen("Cabeceras/2021_Trayectoria.csv", "r");
+      archivo = fopen("Otros/2021_Trayectoria.csv", "r");
       if (archivo == NULL)
       {
         printf("\nNo se pudo leer el archivo\n");
