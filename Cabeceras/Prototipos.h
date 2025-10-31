@@ -20,7 +20,7 @@ typedef struct
 
 typedef struct
 {
-    int matricula[6]; // matrícula.
+    int matricula[6];  // matrícula.
     int repitentes[6]; // cantidad de repitentes.
 } Matricula;
 
@@ -69,8 +69,8 @@ void Carga(NodoTrayectoria **, Trayectoria, char[25], char[10]);
 void ClasificacionMatricula(NodoMatricula *, NodoMatricula **);
 void Clasificacion(NodoTrayectoria *, NodoTrayectoria **);
 void ImprimirLista(NodoTrayectoria *, NodoMatricula *);
-void LiberarM(NodoMatricula **);
-void LiberarT(NodoTrayectoria **);
+void LiberarM(NodoMatricula **lista);
+void LiberarT(NodoTrayectoria **lista);
 void Menu(NodoMatricula *, NodoTrayectoria *);
 // Esta funcion tiene que mostrar por consola una lista de opciones a, b, c, etc. Con el siguiente formato:
 // ------- MENU -------
@@ -92,7 +92,6 @@ void VerTodasLasProvincias(NodoMatricula *, NodoTrayectoria *);
 //.    Registro NodoMatricula numero 1                                         Registro trayectoria numero 1
 //. año de escolaridad = 1 NodoMatriculas = 22 repitentes = 3        año de escolaridad = 1 secundariaEgresados = 22 sobreEdad = 5
 //
-
 
 void VerSector(NodoTrayectoria *, NodoMatricula *);
 // Esta funcion deberia depender del tipo(estatal/privado) , lo que se deberia lograr es recorrer todos los datos que tenga guardado el nodo por cada tipo , es decir, ej: puclico mostraria todos los registros guardados de NodoMatricula y trayectoria de esa tipo ademas deberia mostrarse por consola como 2 tablas para discriminar cuando es NodoMatricula y cuando es trayectoria por cada año escolar.

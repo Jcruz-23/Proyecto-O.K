@@ -1541,3 +1541,39 @@ void VerSector(NodoTrayectoria *Tr, NodoMatricula *Mtr)
     auxMtr = auxMtr->sig;
   }
 }
+
+
+
+
+void LiberarM(NodoMatricula **lista) {
+    NodoMatricula *actual = *lista;
+    NodoMatricula *siguiente = NULL;
+
+    printf("\nLiberando lista de matrículas...");
+
+    while (actual != NULL) {
+        siguiente = actual->sig; // 1. Guardar la referencia al siguiente nodo
+        free(actual);            // 2. Liberar el nodo actual
+        actual = siguiente;      // 3. Mover al siguiente nodo
+    }
+
+    *lista = NULL; // 4. Establecer la cabeza de la lista original a NULL
+    printf(" Memoria liberada (Matrículas).\n");
+}
+
+
+void LiberarT(NodoTrayectoria **lista) {
+    NodoTrayectoria *actual = *lista;
+    NodoTrayectoria *siguiente = NULL;
+
+    printf("Liberando lista de trayectorias...");
+
+    while (actual != NULL) {
+        siguiente = actual->sig; // 1. Guardar la referencia al siguiente nodo
+        free(actual);            // 2. Liberar el nodo actual
+        actual = siguiente;      // 3. Mover al siguiente nodo
+    }
+
+    *lista = NULL; // 4. Establecer la cabeza de la lista original a NULL
+    printf(" Memoria liberada (Trayectorias).\n");
+}

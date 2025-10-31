@@ -3,8 +3,8 @@
 #include "Prototipos.h"
 // #include "Funciones.c"
 
-
-int main() {
+int main()
+{
     NodoMatricula *listaMatriculas = NULL;
     NodoTrayectoria *listaTrayectorias = NULL;
 
@@ -19,8 +19,8 @@ int main() {
     Menu(listaMatriculas, listaTrayectorias);
 
     // Liberar memoria al salir
-    // LiberarListaMatricula(&listaMatriculas);
-    // LiberarListaTrayectoria(&listaTrayectorias);
+    LiberarM(&listaMatriculas);   // Pasa la dirección del puntero
+    LiberarT(&listaTrayectorias); // Pasa la dirección del puntero
 
     printf("\nMemoria liberada. Programa finalizado.\n");
     return 0;
