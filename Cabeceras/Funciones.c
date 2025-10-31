@@ -10,7 +10,7 @@ void Menu(NodoMatricula *mat, NodoTrayectoria *tr)
   do
   {
     printf("\n-------------- MENU --------------\n"
-           " a. Mostrar nodo\n"
+           " a. Mostrar lista\n"
            " b. Mostrar datos de todas las provincias\n"
            " c. Mostrar datos de educacion publica y privada\n"
            " d. Buscar por provincia\n"
@@ -24,7 +24,7 @@ void Menu(NodoMatricula *mat, NodoTrayectoria *tr)
     {
     case 'A':
     case 'a':
-      // MostrarNodo(mat, tr);
+      ImprimirLista(tr, mat);
       break;
     case 'B':
     case 'b':
@@ -702,7 +702,7 @@ void BuscarPorProvincia(NodoMatricula *matricula,
 
     printf("\nLos datos encontrados son:\n");
     printf("\n\n");
-    printf("%-15s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
+    printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
            "%-6s | %-6s | %-6s | %-6s | %-6s | %-9s | %s\n",
            "Provincia", "Sector", "1_P", "2_P", "3_P", "4_P", "5_P", "6_P",
            "1_NP", "2_NP", "3_NP", "4_NP", "5_NP", "6_NP", "Egresados", "Anio");
@@ -729,7 +729,7 @@ void BuscarPorProvincia(NodoMatricula *matricula,
       { // Compara si la provincia ingresada es igual a la provincia de algun nodo, si lo es agrega el nodo completo a la nueva lista filtrada
         bandera = 1;
         printf(
-            "%-15s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
+            "%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
             "%-6d | %-6d | %-6d | %-6d | %-6d | %-9d | %d\n",
             aux->provincia, aux->sector, aux->trayectoria.promovidos[0],
             aux->trayectoria.promovidos[1], aux->trayectoria.promovidos[2],
@@ -783,7 +783,7 @@ void BuscarPorProvincia(NodoMatricula *matricula,
     }
     bandera = 0;
     printf("\n\n");
-    printf("%-15s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
+    printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
            "%-6s | %-6s | %-6s | %-6s | %-6s | %s\n",
            "Provincia", "Sector", "1_REP", "2_REP", "3_REP", "4_REP", "5_REP",
            "6_REP", "1_MTR", "2_MTR", "3_MTR", "4_MTR", "5_MTR", "6_MTR",
@@ -812,7 +812,7 @@ void BuscarPorProvincia(NodoMatricula *matricula,
       {
         bandera = 1;
         printf(
-            "%-15s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
+            "%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
             "%-6d | %-6d | %-6d | %-6d | %-6d | %d\n",
             aux2->provincia, aux2->sector, aux2->reg.repitentes[0],
             aux2->reg.repitentes[1], aux2->reg.repitentes[2],
@@ -899,6 +899,7 @@ void BuscarPorProvincia(NodoMatricula *matricula,
           free(*tempT);
           *tempT = proxT;
         }
+        (*cont) = 0;
       }
     }
   }
@@ -934,7 +935,7 @@ void BuscarPorAnio(NodoMatricula *Matricula,
     NodoTrayectoria *auxT = lista_a_filtrar_T;
 
     printf("\nDatos encontrados del año %d:\n\n", anio);
-    printf("%-15s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
+    printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
            "%-6s | %-6s | %-6s | %-6s | %-6s | %-9s | %s\n",
            "Provincia", "Sector", "1_P", "2_P", "3_P", "4_P", "5_P", "6_P",
            "1_NP", "2_NP", "3_NP", "4_NP", "5_NP", "6_NP", "Egresados", "Anio");
@@ -945,7 +946,7 @@ void BuscarPorAnio(NodoMatricula *Matricula,
       {
         bandera = 1;
         printf(
-            "%-15s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
+            "%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
             "%-6d | %-6d | %-6d | %-6d | %-6d | %-9d | %d\n",
             auxT->provincia, auxT->sector, auxT->trayectoria.promovidos[0],
             auxT->trayectoria.promovidos[1], auxT->trayectoria.promovidos[2],
@@ -988,7 +989,7 @@ void BuscarPorAnio(NodoMatricula *Matricula,
     bandera = 0;
     printf("\n\n");
 
-    printf("%-15s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
+    printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
            "%-6s | %-6s | %-6s | %-6s | %-6s | %s\n",
            "Provincia", "Sector", "1_REP", "2_REP", "3_REP", "4_REP", "5_REP",
            "6_REP", "1_MTR", "2_MTR", "3_MTR", "4_MTR", "5_MTR", "6_MTR",
@@ -1002,7 +1003,7 @@ void BuscarPorAnio(NodoMatricula *Matricula,
       {
         bandera = 1;
         printf(
-            "%-15s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
+            "%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
             "%-6d | %-6d | %-6d | %-6d | %-6d | %d\n",
             auxM->provincia, auxM->sector, auxM->reg.repitentes[0],
             auxM->reg.repitentes[1], auxM->reg.repitentes[2],
@@ -1077,6 +1078,7 @@ void BuscarPorAnio(NodoMatricula *Matricula,
           free(*tempT);
           *tempT = proxT;
         }
+        (*cont) = 0;
       }
     }
   }
@@ -1124,7 +1126,7 @@ void BuscarPorTipo(NodoMatricula *Matricula,
 
     printf("\nLos datos encontrados son:\n");
     printf("\n\n");
-    printf("%-15s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
+    printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
            "%-6s | %-6s | %-6s | %-6s | %-6s | %-9s | %s\n",
            "Provincia", "Sector", "1_P", "2_P", "3_P", "4_P", "5_P", "6_P",
            "1_NP", "2_NP", "3_NP", "4_NP", "5_NP", "6_NP", "Egresados", "Anio");
@@ -1153,7 +1155,7 @@ void BuscarPorTipo(NodoMatricula *Matricula,
         bandera = 1;
 
         printf(
-            "%-15s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
+            "%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
             "%-6d | %-6d | %-6d | %-6d | %-6d | %-9d | %d\n",
             aux->provincia, aux->sector, aux->trayectoria.promovidos[0],
             aux->trayectoria.promovidos[1], aux->trayectoria.promovidos[2],
@@ -1208,7 +1210,7 @@ void BuscarPorTipo(NodoMatricula *Matricula,
     }
     bandera = 0;
     printf("\n\n");
-    printf("%-15s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
+    printf("%-25s | %-10s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | %-6s | "
            "%-6s | %-6s | %-6s | %-6s | %-6s | %s\n",
            "Provincia", "Sector", "1_REP", "2_REP", "3_REP", "4_REP", "5_REP",
            "6_REP", "1_MTR", "2_MTR", "3_MTR", "4_MTR", "5_MTR", "6_MTR",
@@ -1238,7 +1240,7 @@ void BuscarPorTipo(NodoMatricula *Matricula,
       {
         bandera = 1;
         printf(
-            "%-15s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
+            "%-25s | %-10s | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | %-6d | "
             "%-6d | %-6d | %-6d | %-6d | %-6d | %d\n",
             aux2->provincia, aux2->sector, aux2->reg.repitentes[0],
             aux2->reg.repitentes[1], aux2->reg.repitentes[2],
@@ -1325,6 +1327,7 @@ void BuscarPorTipo(NodoMatricula *Matricula,
           free(*tempT);
           *tempT = proxT;
         }
+        (*cont) = 0;
       }
     }
   }
