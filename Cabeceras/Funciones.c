@@ -58,8 +58,85 @@ void Menu(NodoMatricula *mat, NodoTrayectoria *tr)
 }
 
 // Implementación CORREGIDA de VerTodasLasProvincias
+void RegistrarProvincias(NodoMatricula *listaMatriculas, NodoTrayectoria *listaTrayectorias)
+{
+  FILE *archivo = fopen("REGISTRO_PROVINCIAS.txt","w");
+  NodoMatricula *auxM = listaMatriculas; // Usamos el NodoMatricula
+
+  // Recorremos todas las provincias que existan en la listaMatriculas
+  while (auxM != NULL)
+  {
+    char provinciaActual[30];
+    strcpy(provinciaActual, auxM->provincia);
+
+    fprintf(archivo,"                  MATRICULAS %s\n", provinciaActual);
+    fprintf(archivo,"********************************************************************\n");
+
+    int encontradoM = 0;
+    int encontradoT = 0;
+
+    NodoMatricula *m = listaMatriculas; // Recorremos desde el inicio para ver todos los años/sectores
+    NodoTrayectoria *t = listaTrayectorias;
+
+    // Bucle para MATRÍCULA
+    while (m != NULL)
+    {
+      if (strcmp(m->provincia, provinciaActual) == 0)
+      {
+        fprintf(archivo,"\n  Registro MATRICULA AÑO %d (Sector: %s)\n", m->id, m->sector);
+        for (int i = 0; i < 6; i++)
+        {
+          fprintf(archivo,"  Año escolaridad %d: Matriculas=%d, Repitentes=%d\n",
+                 i + 1, m->reg.matricula[i], m->reg.repitentes[i]);
+        }
+        encontradoM = 1;
+      }
+      m = m->sig;
+    }
+
+    if (!encontradoM)
+      fprintf(archivo,"  No se encontraron registros de matrícula para %s.\n", provinciaActual);
+
+    // Bucle para TRAYECTORIA
+    fprintf(archivo,"\n********************************************************************\n");
+    fprintf(archivo,"                  TRAYECTORIAS %s\n", provinciaActual);
+    fprintf(archivo,"********************************************************************\n");
+    while (t != NULL)
+    {
+      if (strcmp(t->provincia, provinciaActual) == 0)
+      {
+        fprintf(archivo,"\n  Registro TRAYECTORIA AÑO %d (Sector: %s)\n", t->id, t->sector);
+        for (int i = 0; i < 6; i++)
+        {
+          // Nota: La lógica de tu impresión original mezclaba t->trayectoria.secundariaEgresados
+          // con el bucle de 6 años, y usaba nopromovidos para "sobreEdad". Muestro los 6 grados.
+          fprintf(archivo,"  Año escolaridad %d: Promovidos=%d, No Promovidos=%d\n",
+                 i + 1, t->trayectoria.promovidos[i], t->trayectoria.nopromovidos[i]);
+        }
+        fprintf(archivo,"  Total Egresados Secundaria: %d\n", t->trayectoria.secundariaEgresados);
+        encontradoT = 1;
+      }
+      t = t->sig;
+    }
+
+    if (!encontradoT)
+      fprintf(archivo,"  No se encontraron registros de trayectoria para %s.\n", provinciaActual);
+
+    fprintf(archivo,"\n********************************************************************\n");
+
+    // Bucle para avanzar a la siguiente PROVINCIA ÚNICA (la lógica del bucle sigue siendo correcta)
+    char provinciaAnterior[30];
+    strcpy(provinciaAnterior, provinciaActual);
+    while (auxM != NULL && strcmp(auxM->provincia, provinciaAnterior) == 0)
+    {
+      auxM = auxM->sig;
+    }
+  }
+  fclose(archivo);
+}
 void VerTodasLasProvincias(NodoMatricula *listaMatriculas, NodoTrayectoria *listaTrayectorias)
 {
+  RegistrarProvincias(listaMatriculas ,listaTrayectorias);//
   // ⚠️ ATENCIÓN: El prototipo de la función tiene Nodos, no solo la estructura Matricula.
   // Usaremos los punteros que recibimos (listaMatriculas, listaTrayectorias).
 
