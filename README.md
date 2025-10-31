@@ -9,12 +9,11 @@ Este proyecto tiene como propósito visualizar la evolución del sistema educati
 ### 1️⃣ Evolución  
 Visualizar la evolución del sistema educativo argentino desde 2019 hasta 2021.
 
-
 ### 3️⃣ Observar  
-Evaluar **eficiencia**, niveles de **repitencia** y **egresos** del sistema educativo.
+Evaluar niveles de **repitencia** y **egresos** del sistema educativo.
 
 ### 4️⃣ Automatizar  
-Implementar **programación en C** para **automatizar la lectura de los archivos** y optimizar los datos para mejor comprension.
+Implementar un **programa en C** para **automatizar la lectura y procesamiento de datos del archivo** y optimizar los datos para mejor comprension.
 
 ---
 
