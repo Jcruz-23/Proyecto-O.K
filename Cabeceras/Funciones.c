@@ -888,16 +888,7 @@ void BuscarPorProvincia(NodoMatricula *matricula,
           printf("\nNo ha ingresado una opcion valida\n");
         }
       }else{
-<<<<<<< HEAD
-        while(tempM != NULL || tempT != NULL){
-          NodoMatricula *proxM = (*tempM)->sig;
-          NodoTrayectoria *proxT = (*tempT)->sig;
-          free(*tempM);
-          free(*tempT);
-          *tempM = proxM;
-          *tempT = proxT;
-        }
-=======
+
         while(*tempM != NULL){
           NodoMatricula *proxM = (*tempM)->sig;
           free(*tempM);
@@ -910,7 +901,6 @@ void BuscarPorProvincia(NodoMatricula *matricula,
           *tempT = proxT;
         }
         (*cont) = 0;
->>>>>>> 78f7f4c1844c6db2c8fe63141925f190012d708a
       }
     }
   }
@@ -1078,16 +1068,7 @@ void BuscarPorAnio(NodoMatricula *Matricula,
           printf("\nOpción no válida.\n");
         }
       }else{
-<<<<<<< HEAD
-        while(tempM != NULL || tempT != NULL){
-          NodoMatricula *proxM = (*tempM)->sig;
-          NodoTrayectoria *proxT = (*tempT)->sig;
-          free(*tempM);
-          free(*tempT);
-          *tempM = proxM;
-          *tempT = proxT;
-        }
-=======
+
         while(*tempM != NULL){
           NodoMatricula *proxM = (*tempM)->sig;
           free(*tempM);
@@ -1100,7 +1081,6 @@ void BuscarPorAnio(NodoMatricula *Matricula,
           *tempT = proxT;
         }
         (*cont) = 0;
->>>>>>> 78f7f4c1844c6db2c8fe63141925f190012d708a
       }
     }
   }
@@ -1338,16 +1318,7 @@ void BuscarPorTipo(NodoMatricula *Matricula,
           printf("\nOpción no válida.\n");
         }
       }else{
-<<<<<<< HEAD
-        while(tempM != NULL || tempT != NULL){
-          NodoMatricula *proxM = (*tempM)->sig;
-          NodoTrayectoria *proxT = (*tempT)->sig;
-          free(*tempM);
-          free(*tempT);
-          *tempM = proxM;
-          *tempT = proxT;
-        }
-=======
+
         while(*tempM != NULL){
           NodoMatricula *proxM = (*tempM)->sig;
           free(*tempM);
@@ -1360,7 +1331,6 @@ void BuscarPorTipo(NodoMatricula *Matricula,
           *tempT = proxT;
         }
         (*cont) = 0;
->>>>>>> 78f7f4c1844c6db2c8fe63141925f190012d708a
       }
     }
   }
