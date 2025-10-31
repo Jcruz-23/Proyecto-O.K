@@ -32,7 +32,7 @@ void Menu(NodoMatricula *mat, NodoTrayectoria *tr)
       break;
     case 'C':
     case 'c':
-      // VerSector(tr, mat);
+      VerSector(tr, mat);
       break;
     case 'D':
     case 'd':
@@ -887,6 +887,18 @@ void BuscarPorProvincia(NodoMatricula *matricula,
         default:
           printf("\nNo ha ingresado una opcion valida\n");
         }
+      }else{
+        while(*tempM != NULL){
+          NodoMatricula *proxM = (*tempM)->sig;
+          free(*tempM);
+          *tempM = proxM;
+        }
+       
+        while(*tempT != NULL){
+          NodoTrayectoria *proxT = (*tempT)->sig;
+          free(*tempT);
+          *tempT = proxT;
+        }
       }
     }
   }
@@ -1052,6 +1064,18 @@ void BuscarPorAnio(NodoMatricula *Matricula,
           break;
         default:
           printf("\nOpción no válida.\n");
+        }
+      }else{
+        while(*tempM != NULL){
+          NodoMatricula *proxM = (*tempM)->sig;
+          free(*tempM);
+          *tempM = proxM;
+        }
+       
+        while(*tempT != NULL){
+          NodoTrayectoria *proxT = (*tempT)->sig;
+          free(*tempT);
+          *tempT = proxT;
         }
       }
     }
@@ -1288,6 +1312,18 @@ void BuscarPorTipo(NodoMatricula *Matricula,
           break;
         default:
           printf("\nOpción no válida.\n");
+        }
+      }else{
+        while(*tempM != NULL){
+          NodoMatricula *proxM = (*tempM)->sig;
+          free(*tempM);
+          *tempM = proxM;
+        }
+       
+        while(*tempT != NULL){
+          NodoTrayectoria *proxT = (*tempT)->sig;
+          free(*tempT);
+          *tempT = proxT;
         }
       }
     }
