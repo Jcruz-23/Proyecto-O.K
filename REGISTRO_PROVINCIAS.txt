@@ -1,3 +1,5 @@
+
+********************************************************************
                   MATRICULAS Buenos Aires
 ********************************************************************
 
@@ -7916,5 +7918,3 @@
   Año escolaridad 5: Promovidos=4319, No Promovidos=201
   Año escolaridad 6: Promovidos=236, No Promovidos=5
   Total Egresados Secundaria: 5834
-
-********************************************************************
