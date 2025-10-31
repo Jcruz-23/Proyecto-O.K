@@ -24,7 +24,7 @@ void Menu(NodoMatricula *mat, NodoTrayectoria *tr)
     {
     case 'A':
     case 'a':
-      // MostrarNodo(mat, tr);
+      ImprimirLista(tr, mat);
       break;
     case 'B':
     case 'b':
