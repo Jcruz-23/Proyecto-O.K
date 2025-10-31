@@ -69,6 +69,7 @@ void RegistrarProvincias(NodoMatricula *listaMatriculas, NodoTrayectoria *listaT
     char provinciaActual[30];
     strcpy(provinciaActual, auxM->provincia);
 
+    fprintf(archivo,"\n********************************************************************\n");
     fprintf(archivo,"                  MATRICULAS %s\n", provinciaActual);
     fprintf(archivo,"********************************************************************\n");
 
@@ -122,7 +123,6 @@ void RegistrarProvincias(NodoMatricula *listaMatriculas, NodoTrayectoria *listaT
     if (!encontradoT)
       fprintf(archivo,"  No se encontraron registros de trayectoria para %s.\n", provinciaActual);
 
-    fprintf(archivo,"\n********************************************************************\n");
 
     // Bucle para avanzar a la siguiente PROVINCIA ÚNICA (la lógica del bucle sigue siendo correcta)
     char provinciaAnterior[30];
@@ -154,6 +154,7 @@ void VerTodasLasProvincias(NodoMatricula *listaMatriculas, NodoTrayectoria *list
     char provinciaActual[30];
     strcpy(provinciaActual, auxM->provincia);
 
+    printf("\n********************************************************************\n");
     printf("                  MATRICULAS %s\n", provinciaActual);
     printf("********************************************************************\n");
 
@@ -206,8 +207,6 @@ void VerTodasLasProvincias(NodoMatricula *listaMatriculas, NodoTrayectoria *list
 
     if (!encontradoT)
       printf("  No se encontraron registros de trayectoria para %s.\n", provinciaActual);
-
-    printf("\n********************************************************************\n");
 
     // Bucle para avanzar a la siguiente PROVINCIA ÚNICA (la lógica del bucle sigue siendo correcta)
     char provinciaAnterior[30];
