@@ -77,8 +77,7 @@ void VerTodasLasProvincias(NodoMatricula *listaMatriculas, NodoTrayectoria *list
     char provinciaActual[30];
     strcpy(provinciaActual, auxM->provincia);
 
-    printf("\n********************************************************************\n");
-    printf("                  MATRICULAS %s                    TRAYECTORIAS %s\n", provinciaActual, provinciaActual);
+    printf("                  MATRICULAS %s\n", provinciaActual);
     printf("********************************************************************\n");
 
     int encontradoM = 0;
@@ -107,6 +106,9 @@ void VerTodasLasProvincias(NodoMatricula *listaMatriculas, NodoTrayectoria *list
       printf("  No se encontraron registros de matrícula para %s.\n", provinciaActual);
 
     // Bucle para TRAYECTORIA
+    printf("\n********************************************************************\n");
+    printf("                  TRAYECTORIAS %s\n", provinciaActual);
+    printf("********************************************************************\n");
     while (t != NULL)
     {
       if (strcmp(t->provincia, provinciaActual) == 0)
