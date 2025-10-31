@@ -1,6 +1,8 @@
 // #include "../Cabeceras/Prototipos.h"
 // #include <stdlib.h>
 
+
+
 // int main()
 // {
 //     NodoTrayectoria *RegistroTrayectoria = NULL;
@@ -11,6 +13,7 @@
 //     //ImprimirLista(RegistroTrayectoria, Matricula);
 //     return 0;
 // }
+
 
 // void InsertarMatricula(NodoMatricula **m, Matricula rM, int id,
 //                                char provincia[20], char tipo[10])
@@ -56,6 +59,7 @@
 //         aux = aux->sig;
 //     }
 // }
+
 
 // void LecturaNodoMatricula(NodoMatricula **matricula)
 // {
