@@ -10,7 +10,7 @@ void Menu(NodoMatricula *mat, NodoTrayectoria *tr)
   do
   {
     printf("\n-------------- MENU --------------\n"
-           " a. Mostrar nodo\n"
+           " a. Mostrar lista\n"
            " b. Mostrar datos de todas las provincias\n"
            " c. Mostrar datos de educacion publica y privada\n"
            " d. Buscar por provincia\n"
